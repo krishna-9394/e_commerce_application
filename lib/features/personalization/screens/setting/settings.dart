@@ -3,7 +3,11 @@ import 'package:e_commerce_application/common/widgets/custom_shape/container/cur
 import 'package:e_commerce_application/common/widgets/list_tile/setting_menu_tile.dart';
 import 'package:e_commerce_application/common/widgets/list_tile/user_profile_tile.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/features/personalization/screens/addresses/addresses.dart';
 import 'package:e_commerce_application/features/personalization/screens/profile/profile.dart';
+import 'package:e_commerce_application/features/shop/screens/cart/cart.dart';
+import 'package:e_commerce_application/features/shop/screens/order/order.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,19 +64,19 @@ class SettingScreen extends StatelessWidget {
                     title: 'My Addresses',
                     subTitle: 'set shopping delivery addresses',
                     icon: Iconsax.safe_home,
-                    onTap: () {},
+                    onTap: () => Get.to(() => const UserAddressScreen()),
                   ),
                   TSettingMenuTile(
                     title: 'My Cart',
                     subTitle: 'Add, remove Product and move to checkout',
                     icon: Iconsax.shopping_cart,
-                    onTap: () {},
+                    onTap: () => Get.to(() => const CartScreen()),
                   ),
                   TSettingMenuTile(
                     title: 'My Orders',
                     subTitle: 'In-Progress and Completed Orders',
                     icon: Iconsax.bag_tick,
-                    onTap: () {},
+                    onTap: () => Get.to(() => const MyOrderScreen()),
                   ),
                   TSettingMenuTile(
                     title: 'Bank Accounts',
@@ -141,7 +145,7 @@ class SettingScreen extends StatelessWidget {
                     width: double.infinity,
                     child: OutlinedButton(
                       child: const Text('Logout'),
-                      onPressed: () {},
+                      onPressed: () => AuthenticationRepository.instance.logout(),
                     ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections * 2.5),

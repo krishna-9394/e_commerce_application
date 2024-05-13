@@ -2,6 +2,7 @@ import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SuccessScreen extends StatelessWidget {
   final String image;
@@ -38,8 +39,8 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               /// Image
-              Image(
-                image: AssetImage(image),
+              Lottie.asset(
+                image,
                 width: THelperFunctions.screenWidth() * 0.6,
               ),
               const SizedBox(height: TSizes.spaceBtwSections),

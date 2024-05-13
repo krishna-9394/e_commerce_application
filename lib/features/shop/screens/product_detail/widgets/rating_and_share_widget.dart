@@ -27,9 +27,9 @@ class RatingAndShare extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                      text: rating.toString(),
+                      text: "$rating ",
                       style: Theme.of(context).textTheme.bodyLarge),
-                  TextSpan(text: reviewCount.toString()),
+                  TextSpan(text: "($reviewCount)"),
                 ],
               ),
             )

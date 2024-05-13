@@ -5,7 +5,7 @@ import 'package:e_commerce_application/common/widgets/images/t_rounded_image.dar
 import 'package:e_commerce_application/common/widgets/texts/brand_title_text_with_verified_symbol.dart';
 import 'package:e_commerce_application/common/widgets/texts/product_price_text.dart';
 import 'package:e_commerce_application/common/widgets/texts/product_title_text.dart';
-import 'package:e_commerce_application/features/shop/screens/product/product.dart';
+import 'package:e_commerce_application/features/shop/screens/product_detail/product.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';

@@ -3,12 +3,14 @@ import 'package:e_commerce_application/common/widgets/custom_shape/container/sea
 import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
 import 'package:e_commerce_application/common/widgets/products/product_cards/vertical_product_card.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_application/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -76,7 +78,10 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Section Heading
-                  const TSectionHeading(title: 'Popular Products'),
+                  TSectionHeading(
+                    title: 'Popular Products',
+                    onPressed: () => Get.to(() => const AllProducts()),
+                  ),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   /// Products in Grid;

@@ -1,7 +1,9 @@
+import 'package:e_commerce_application/features/authentication/controllers/login/login_controller.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BottomIconButton extends StatelessWidget {
   const BottomIconButton({
@@ -10,6 +12,7 @@ class BottomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -24,7 +27,7 @@ class BottomIconButton extends StatelessWidget {
               width: TSizes.iconMd,
               image: AssetImage(TImages.google),
             ),
-            onPressed: () {},
+            onPressed: () => controller.googleSignIn(),
           ),
         ),
         const SizedBox(width: TSizes.spaceBtwItems),

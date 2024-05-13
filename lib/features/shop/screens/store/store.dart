@@ -5,12 +5,14 @@ import 'package:e_commerce_application/common/widgets/custom_shape/container/sea
 import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
 import 'package:e_commerce_application/common/widgets/products/cart/cart_counter_icon_button.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_application/features/shop/screens/brands/all_brands.dart';
 import 'package:e_commerce_application/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
@@ -66,7 +68,7 @@ class StoreScreen extends StatelessWidget {
                       /// Featured Branding
                       TSectionHeading(
                         title: 'Featured Brands',
-                        onPressed: () {},
+                        onPressed: () => Get.to(() => const AllBrandScreen()),
                       ),
                       const SizedBox(height: TSizes.spaceBtwItems / 1.5),
 

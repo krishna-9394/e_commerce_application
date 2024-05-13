@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class TProductPriceText extends StatelessWidget {
   final String currencySign, price;
