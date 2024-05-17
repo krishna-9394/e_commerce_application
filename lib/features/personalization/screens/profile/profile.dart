@@ -1,10 +1,13 @@
 import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
 import 'package:e_commerce_application/common/widgets/images/circular_image.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
+import 'package:e_commerce_application/features/personalization/screens/profile/widget/change_name.dart';
 import 'package:e_commerce_application/features/personalization/screens/profile/widget/profile_menu.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -12,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       appBar: const TAppBar(
         showBackArrow: true,
@@ -47,30 +51,37 @@ class ProfileScreen extends StatelessWidget {
                 showActionButton: false,
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
-              const TProfileMenu(question: 'Name', answer: 'Coding WIth T'),
-              const TProfileMenu(question: 'UserName', answer: 'coding_with_t'),
+              Obx(
+                () => TProfileMenu(
+                  question: 'Name',
+                  answer: controller.user.value.fullName,
+                  onPressed: () => Get.to(() => const ChangeName()),
+                ),
+              ),
+              TProfileMenu(
+                  question: 'UserName', answer: controller.user.value.userName),
               const SizedBox(height: TSizes.spaceBtwItems),
               const TSectionHeading(
                 title: 'Personal Information',
                 showActionButton: false,
               ),
               const SizedBox(height: TSizes.spaceBtwItems),
-              const TProfileMenu(
+              TProfileMenu(
                 question: 'User ID',
-                answer: '45689',
+                answer: controller.user.value.id,
                 icon: Iconsax.copy,
               ),
-              const TProfileMenu(
+              TProfileMenu(
                 question: 'Email',
-                answer: 'codingwitht@gmail.com',
+                answer: controller.user.value.email,
               ),
-              const TProfileMenu(
+              TProfileMenu(
                 question: 'Phone Number',
-                answer: '+91 9945633812',
+                answer: controller.user.value.phoneNumber,
               ),
               const TProfileMenu(
                 question: 'Gender',
-                answer: 'Male',
+                answer: 'male',
               ),
               const TProfileMenu(
                 question: 'Date of Birth',
@@ -79,7 +90,7 @@ class ProfileScreen extends StatelessWidget {
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),
               TextButton(
-                onPressed: () {},
+                onPressed: () => controller.deleteAccountWarningPopup(),
                 child: const Text(
                   'Close Account',
                   style: TextStyle(color: Colors.red),

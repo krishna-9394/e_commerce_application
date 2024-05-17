@@ -55,9 +55,11 @@ class SignupController extends GetxController {
       // Privacy Policy
       if (!privacyPolicy.value) {
         TLoaders.warningSnackBar(
-            title: 'Accept Privacy Policy',
-            message:
-                'In order to create account, you have to read and accept the Privacy Policy & Terms of Use');
+          title: 'Accept Privacy Policy',
+          message:
+              'In order to create account, you have to read and accept the Privacy Policy & Terms of Use',
+        );
+        return;
       }
       // Register the user in the firebase Authentication & save user data in firestore
       final userCredential =
@@ -86,7 +88,9 @@ class SignupController extends GetxController {
           title: "Congratulations",
           message: "Your account has been created! Verfiy email to continue.");
       // move to verfiy Email Screen
-      Get.to(() => VerifyEmailScreen(email: newUser.email,));
+      Get.to(() => VerifyEmailScreen(
+            email: newUser.email,
+          ));
     } catch (e) {
       TFullScreenLoader.stopLoading();
       //  Show some generic error to user

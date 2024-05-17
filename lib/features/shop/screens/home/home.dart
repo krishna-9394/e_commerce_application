@@ -3,6 +3,7 @@ import 'package:e_commerce_application/common/widgets/custom_shape/container/sea
 import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
 import 'package:e_commerce_application/common/widgets/products/product_cards/vertical_product_card.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/home_categories.dart';

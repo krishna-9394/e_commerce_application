@@ -68,11 +68,11 @@ class UserModel {
       return UserModel(
           id: document.id,
           firstName: data["FirstName"] ?? "",
-          lastName: data["lastName"] ?? "",
-          userName: data["userName"] ?? "",
-          email: data["email"] ?? "",
-          phoneNumber: data["phoneNumber"] ?? "",
-          profilePicture: data["profilePicture"] ?? "");
+          lastName: data["LastName"] ?? "",
+          userName: data["UserName"] ?? "",
+          email: data["Email"] ?? "",
+          phoneNumber: data["PhoneNumber"] ?? "",
+          profilePicture: data["ProfilePicture"] ?? "");
     }
     return empty();
   }

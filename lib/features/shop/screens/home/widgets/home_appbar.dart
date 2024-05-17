@@ -1,5 +1,7 @@
 import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
+import 'package:e_commerce_application/common/widgets/loader/shimmer_efftect.dart';
 import 'package:e_commerce_application/common/widgets/products/cart/cart_counter_icon_button.dart';
+import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/features/shop/screens/cart/cart.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';
@@ -13,6 +15,7 @@ class THomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return TAppBar(
       showBackArrow: false,
       iconData: null,
@@ -26,13 +29,22 @@ class THomeAppBar extends StatelessWidget {
                 .labelMedium!
                 .apply(color: TColors.grey),
           ),
-          Text(
-            TTexts.homeAppbarSubTitle,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .apply(color: TColors.white),
-          ),
+          Obx(() {
+            if (controller.profileLoading.value) {
+              return const TShimmerEfftect(
+                width: 80,
+                height: 15,
+              );
+            } else {
+              return Text(
+                controller.user.value.fullName,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .apply(color: TColors.white),
+              );
+            }
+          }),
         ],
       ),
       actions: [
