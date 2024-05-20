@@ -1,10 +1,12 @@
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
+import 'package:e_commerce_application/features/shop/models/products/product_model.dart';
 import 'package:e_commerce_application/features/shop/screens/product_detail/widgets/bottom_add_to_cart.dart';
 import 'package:e_commerce_application/features/shop/screens/product_detail/widgets/product_image_slider.dart';
 import 'package:e_commerce_application/features/shop/screens/product_detail/widgets/product_meta_data.dart';
 import 'package:e_commerce_application/features/shop/screens/product_detail/widgets/products_attributes.dart';
 import 'package:e_commerce_application/features/shop/screens/product_detail/widgets/rating_and_share_widget.dart';
 import 'package:e_commerce_application/features/shop/screens/product_review/product_review.dart';
+import 'package:e_commerce_application/utils/constants/dummy_data.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetails extends StatelessWidget {
-  const ProductDetails({super.key});
+  const ProductDetails({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class ProductDetails extends StatelessWidget {
         child: Column(
           children: [
             /// Product Image Slider
-            const TProductImageSlider(),
+            TProductImageSlider(product: product),
 
             /// Product Details
             Padding(
@@ -39,11 +42,13 @@ class ProductDetails extends StatelessWidget {
                   const RatingAndShare(rating: 5.0, reviewCount: 199),
 
                   /// Product Meta Data
-                  const TProductMetaData(),
+                  TProductMetaData(product: product),
 
                   /// Attributes
-                  const ProductAttributes(),
-                  const SizedBox(height: TSizes.spaceBtwSections),
+                  if (product.productType == ProductType.variable.toString())
+                    ProductAttributes(product: product),
+                  if (product.productType == ProductType.variable.toString())
+                    const SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Checkout Button
                   const TSectionHeading(
@@ -51,15 +56,15 @@ class ProductDetails extends StatelessWidget {
                     showActionButton: false,
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  const ReadMoreText(
-                    'This is a product discription for Blue Nike Sleeve less vest. There are more things that can be added but i didn\'t add to keep the things simple.',
+                  ReadMoreText(
+                    product.description ?? 'Description is unavailable.',
                     trimMode: TrimMode.Line,
                     trimCollapsedText: ' Show more',
                     trimExpandedText: ' Less',
-                    moreStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    moreStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w800),
+                    lessStyle: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
 

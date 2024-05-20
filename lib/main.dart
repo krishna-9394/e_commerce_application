@@ -1,7 +1,8 @@
 import 'package:e_commerce_application/bindings/genernal_bindings.dart';
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/firebase_options.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
+import 'package:e_commerce_application/utils/routes/app_routes.dart';
 import 'package:e_commerce_application/utils/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
+      getPages: AppRoutes.pages,
       // show Loader or Circular Progress meanwhile Authentication repository will decide show screen
       home: const Scaffold(
         backgroundColor: TColors.primary,

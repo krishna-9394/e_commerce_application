@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/helpers/network_manager.dart';

@@ -1,5 +1,6 @@
 import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
 import 'package:e_commerce_application/common/widgets/images/circular_image.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
 import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/features/personalization/screens/profile/widget/change_name.dart';
@@ -31,13 +32,30 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const TCircularImage(
-                      image: TImages.user,
-                      height: 80,
-                      width: 80,
+                    Obx(
+                      () {
+                        final networkImage =
+                            controller.user.value.profilePicture;
+                        final image = networkImage.isNotEmpty
+                            ? networkImage
+                            : TImages.user;
+
+                        return controller.imageUploading.value
+                            ? const TShimmerEfftect(
+                                width: 80,
+                                height: 80,
+                                radius: 80,
+                              )
+                            : TCircularImage(
+                                image: image,
+                                height: 80,
+                                width: 80,
+                                isNetworkImage: networkImage.isNotEmpty,
+                              );
+                      },
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.uploadProfilePicture(),
                       child: const Text('Change Profile Picture'),
                     ),
                   ],

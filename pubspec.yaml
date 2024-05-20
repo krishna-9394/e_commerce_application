@@ -27,6 +27,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   lottie: ^3.1.0
   connectivity_plus: ^6.0.3
+  shimmer: ^3.0.0
+  image_picker: ^1.1.1
 
 # Product Speicific 
   carousel_slider: ^4.2.1
@@ -38,7 +40,8 @@ dependencies:
   firebase_auth: ^4.19.5
   cloud_firestore: ^4.17.3
   google_sign_in: ^6.2.1
-  shimmer: ^3.0.0
+  firebase_storage: ^11.7.5
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

@@ -1,14 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_application/common/widgets/custom_shape/container/curved_edges_widget_container.dart';
 import 'package:e_commerce_application/common/widgets/custom_shape/container/search_container.dart';
 import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
 import 'package:e_commerce_application/common/widgets/products/product_cards/vertical_product_card.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
-import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/product/all_product_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/product/product_controller.dart';
 import 'package:e_commerce_application/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:e_commerce_application/features/shop/screens/home/widgets/promo_slider.dart';
-import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +21,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductController());
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -69,27 +72,46 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   /// Rounded Image banner
-                  const TPromoSlider(
-                    banner: [
-                      TImages.promoBanner1,
-                      TImages.promoBanner2,
-                      TImages.promoBanner3,
-                    ],
-                  ),
+                  const TPromoSlider(),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   /// Section Heading
                   TSectionHeading(
                     title: 'Popular Products',
-                    onPressed: () => Get.to(() => const AllProducts()),
+                    onPressed: () => Get.to(
+                      () => AllProducts(
+                        title: 'Popular Products',
+                        // query: FirebaseFirestore.instance
+                        //     .collection('products')
+                        //     .where('IsFeatured', isEqualTo: true)
+                        //     .limit(6),
+                        futureMethod: controller.fetchAllFeaturedProducts(),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   /// Products in Grid;
-                  TGridLayout(
-                    itemCount: 2,
-                    itemBuiler: (_, index) => const TVerticalProductCard(),
-                  ),
+                  Obx(() {
+                    if (controller.isLoading.value) {
+                      return const TVerticalProductShimmer(itemCount: 4);
+                    }
+
+                    if (controller.featuredProducts.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'No Data Found!',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      );
+                    }
+                    return TGridLayout(
+                      itemCount: controller.featuredProducts.length,
+                      itemBuiler: (_, index) => TVerticalProductCard(
+                        product: controller.featuredProducts[index],
+                      ),
+                    );
+                  })
                 ],
               ),
             )

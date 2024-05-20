@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
@@ -19,7 +21,7 @@ class TCircularImage extends StatelessWidget {
     this.overlay,
     this.backgroundColor,
     this.fit = BoxFit.cover,
-    this.isNetworkImage = false,
+    this.isNetworkImage = true,
     this.padding = TSizes.sm,
   });
 
@@ -27,20 +29,32 @@ class TCircularImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
     return Container(
-      width: 56,
-      height: 56,
+      width: width,
+      height: height,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: backgroundColor ?? (isDark ? TColors.black : TColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
-      child: Center(
-        child: Image(
-          color: overlay,
-          fit: fit,
-          image: isNetworkImage
-              ? NetworkImage(image)
-              : AssetImage(image) as ImageProvider,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Center(
+          child: isNetworkImage
+              ? CachedNetworkImage(
+                  imageUrl: image,
+                  fit: fit,
+                  color: overlay,
+                  progressIndicatorBuilder: (context, url, downloadProdgress) =>
+                      TShimmerEfftect(width: width ?? 56, height: height ?? 56),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
+              : Image(
+                  color: overlay,
+                  fit: fit,
+                  width: width ?? 56,
+                  height: height ?? 56,
+                  image: AssetImage(image) as ImageProvider,
+                ),
         ),
       ),
     );

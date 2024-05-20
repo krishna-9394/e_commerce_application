@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/data/repositories/user/user_repository.dart';
 import 'package:e_commerce_application/features/authentication/screens/singup/verify_email.dart';
 import 'package:e_commerce_application/features/personalization/models/user_model.dart';

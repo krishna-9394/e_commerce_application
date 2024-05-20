@@ -1,11 +1,15 @@
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'dart:io';
+
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/features/personalization/models/user_model.dart';
 import 'package:e_commerce_application/utils/exceptions/firebase_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/format_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/platform_exceptions.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
@@ -71,7 +75,6 @@ class UserRepository extends GetxController {
   //Function to update user detail
   Future<void> updateSingleField(Map<String, dynamic> json) async {
     try {
-
       await _db
           .collection("users")
           .doc(AuthenticationRepository.instance.authUser?.uid)
@@ -90,10 +93,7 @@ class UserRepository extends GetxController {
   //Function to remove user data from firestore
   Future<void> removeUserRecord(String userId) async {
     try {
-
-      await _db
-          .collection("users")
-          .doc(userId).delete();
+      await _db.collection("users").doc(userId).delete();
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.toString());
     } on FormatException catch (e) {
@@ -104,6 +104,22 @@ class UserRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
   // Upload Data
-  
+  Future<String> uploadImage(String path, XFile image) async {
+    try {
+      final ref = FirebaseStorage.instance.ref(path).child(image.name);
+      await ref.putFile(File(image.path));
+      final url = await ref.getDownloadURL();
+      return url;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.toString());
+    } on FormatException catch (e) {
+      throw TFormatException(e.toString());
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.toString());
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 }

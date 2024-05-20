@@ -2,6 +2,7 @@ import 'package:e_commerce_application/common/styles/shadow.dart';
 import 'package:e_commerce_application/common/widgets/custom_shape/container/rounded_container.dart';
 import 'package:e_commerce_application/common/widgets/icon/t_circular_icon.dart';
 import 'package:e_commerce_application/common/widgets/images/t_rounded_image.dart';
+import 'package:e_commerce_application/common/widgets/products/favourite_icon/favourite_icon.dart';
 import 'package:e_commerce_application/common/widgets/texts/brand_title_text_with_verified_symbol.dart';
 import 'package:e_commerce_application/common/widgets/texts/product_price_text.dart';
 import 'package:e_commerce_application/common/widgets/texts/product_title_text.dart';
@@ -11,7 +12,6 @@ import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class THorizontalProductCard extends StatelessWidget {
@@ -21,7 +21,7 @@ class THorizontalProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDark = THelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: () => Get.to(const ProductDetails()),
+      // onTap: () => Get.to(ProductDetails(product: product)),
       child: Container(
         width: 312,
         padding: const EdgeInsets.all(1),
@@ -72,10 +72,7 @@ class THorizontalProductCard extends StatelessWidget {
                   const Positioned(
                     top: 0,
                     right: 0,
-                    child: TCircularIcon(
-                      icon: Iconsax.heart5,
-                      color: Colors.red,
-                    ),
+                    child: TFavouriteIcons()
                   ),
                 ],
               ),

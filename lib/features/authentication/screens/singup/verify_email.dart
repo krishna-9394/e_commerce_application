@@ -1,5 +1,5 @@
 import 'package:e_commerce_application/common/widgets/success_screen/success_screen.dart';
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/features/authentication/controllers/signup/verify_email_controller.dart';
 import 'package:e_commerce_application/features/authentication/screens/login/login.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';

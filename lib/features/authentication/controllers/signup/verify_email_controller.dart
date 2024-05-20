@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:e_commerce_application/common/widgets/success_screen/success_screen.dart';
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';
 import 'package:e_commerce_application/utils/popups/loaders.dart';

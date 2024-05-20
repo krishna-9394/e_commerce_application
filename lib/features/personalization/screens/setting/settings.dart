@@ -3,11 +3,13 @@ import 'package:e_commerce_application/common/widgets/custom_shape/container/cur
 import 'package:e_commerce_application/common/widgets/list_tile/setting_menu_tile.dart';
 import 'package:e_commerce_application/common/widgets/list_tile/user_profile_tile.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
-import 'package:e_commerce_application/data/repositories/authentication_repository/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
+import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/features/personalization/screens/addresses/addresses.dart';
 import 'package:e_commerce_application/features/personalization/screens/profile/profile.dart';
 import 'package:e_commerce_application/features/shop/screens/cart/cart.dart';
 import 'package:e_commerce_application/features/shop/screens/order/order.dart';
+import 'package:e_commerce_application/features/uploading_data/screens/upload_data.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -138,6 +141,18 @@ class SettingScreen extends StatelessWidget {
                     subTitle: 'Set image quality to be seen',
                     trailing: Switch(value: false, onChanged: (value) {}),
                   ),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+
+                  const TSectionHeading(
+                    title: 'Upload Dummy Data',
+                    showActionButton: false,
+                  ),
+                  TSettingMenuTile(
+                    title: 'Upload Data',
+                    subTitle: 'Upload data to your cloud firebase',
+                    icon: Iconsax.document_upload,
+                    onTap: () => Get.to(() => const UploadDataScreen()),
+                  ),
 
                   /// Logout Button
                   const SizedBox(height: TSizes.spaceBtwSections),
@@ -145,7 +160,8 @@ class SettingScreen extends StatelessWidget {
                     width: double.infinity,
                     child: OutlinedButton(
                       child: const Text('Logout'),
-                      onPressed: () => AuthenticationRepository.instance.logout(),
+                      onPressed: () =>
+                          AuthenticationRepository.instance.logout(),
                     ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections * 2.5),
