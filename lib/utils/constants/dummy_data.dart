@@ -99,11 +99,7 @@ class TDummyData {
   // ---List of all the Categories---
   static final List<CategoryModel> categories = [
     CategoryModel(
-      id: '1',
-      image: TImages.sportIcon,
-      name: 'Sports',
-      isFeatured: true,
-    ),
+        id: '1', image: TImages.sportIcon, name: 'Sports', isFeatured: true),
     CategoryModel(
         id: '5',
         image: TImages.furnitureIcon,

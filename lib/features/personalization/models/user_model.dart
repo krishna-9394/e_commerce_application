@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_application/utils/constants/enums.dart';
 import 'package:e_commerce_application/utils/formatters/formatter.dart';
 
 class UserModel {
@@ -6,16 +7,18 @@ class UserModel {
   String firstName, lastName;
   final String userName, email;
   String phoneNumber, profilePicture;
+  // final Role role;
 
-  UserModel({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.userName,
-    required this.email,
-    required this.phoneNumber,
-    required this.profilePicture,
-  });
+  UserModel(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.userName,
+      required this.email,
+      required this.phoneNumber,
+      required this.profilePicture
+      // required this.role
+      });
 
   // Helper function to get full name
   String get fullName => '$firstName $lastName';
@@ -47,6 +50,7 @@ class UserModel {
         email: "",
         phoneNumber: "",
         profilePicture: "",
+        // role: Role.customer,
       );
   // convert model to JSON structure for String data in Firebase
   Map<String, dynamic> toJson() {
@@ -57,6 +61,7 @@ class UserModel {
       "Email": email,
       "PhoneNumber": phoneNumber,
       "ProfilePicture": profilePicture,
+      // "Role": role,
     };
   }
 
@@ -73,6 +78,7 @@ class UserModel {
           email: data["Email"] ?? "",
           phoneNumber: data["PhoneNumber"] ?? "",
           profilePicture: data["ProfilePicture"] ?? "");
+      // role: data["Role"] ?? Role.customer);
     }
     return empty();
   }

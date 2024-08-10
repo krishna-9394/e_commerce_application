@@ -93,6 +93,18 @@ class SignupForm extends StatelessWidget {
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
+          /// Role
+          TextFormField(
+            controller: controller.phoneNumber,
+            expands: false,
+            validator: (value) => TValidator.validatePhoneNumber(value),
+            decoration: const InputDecoration(
+              labelText: TTexts.phoneNo,
+              prefixIcon: Icon(Iconsax.call),
+            ),
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+
           /// Password
           Obx(
             () => TextFormField(

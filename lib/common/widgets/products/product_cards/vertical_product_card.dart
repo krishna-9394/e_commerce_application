@@ -58,7 +58,7 @@ class TVerticalProductCard extends StatelessWidget {
                   ),
 
                   /// Discount Tag
-                  if(product.salePrice>0.0) 
+                  if (product.salePrice > 0.0)
                     Positioned(
                       top: 12,
                       child: TRoundedContainer(
@@ -77,11 +77,10 @@ class TVerticalProductCard extends StatelessWidget {
                     ),
 
                   /// Wishlist Button
-                  const Positioned(
-                    top: 0,
-                    right: 0,
-                    child: TFavouriteIcons()
-                  ),
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      child: TFavouriteIcons(productId: product.id)),
                 ],
               ),
             ),

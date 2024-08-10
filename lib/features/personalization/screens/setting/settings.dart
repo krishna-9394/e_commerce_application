@@ -9,7 +9,7 @@ import 'package:e_commerce_application/features/personalization/screens/addresse
 import 'package:e_commerce_application/features/personalization/screens/profile/profile.dart';
 import 'package:e_commerce_application/features/shop/screens/cart/cart.dart';
 import 'package:e_commerce_application/features/shop/screens/order/order.dart';
-import 'package:e_commerce_application/features/uploading_data/screens/upload_data.dart';
+import 'package:e_commerce_application/features/personalization/screens/uploading_data/screens/upload_data.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

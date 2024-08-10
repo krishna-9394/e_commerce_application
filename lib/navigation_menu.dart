@@ -1,3 +1,4 @@
+import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/features/shop/screens/home/home.dart';
 import 'package:e_commerce_application/features/personalization/screens/setting/settings.dart';
 import 'package:e_commerce_application/features/shop/screens/store/store.dart';
@@ -10,6 +11,7 @@ import 'package:iconsax/iconsax.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
+
 
   @override
   Widget build(BuildContext context) {

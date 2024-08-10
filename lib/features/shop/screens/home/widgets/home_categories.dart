@@ -5,8 +5,8 @@ import 'package:e_commerce_application/features/shop/screens/sub_category/sub_ca
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeCategories extends StatelessWidget {
-  const HomeCategories({
+class THomeCategories extends StatelessWidget {
+  const THomeCategories({
     super.key,
   });
 
@@ -40,7 +40,7 @@ class HomeCategories extends StatelessWidget {
             return TVerticalImageText(
               text: category.name,
               image: category.image,
-              onTap: () => Get.to(() => const SubCategoriesSCreen()),
+              onTap: () => Get.to(() => SubCategoriesSCreen(category: category,)),
             );
           },
         ),

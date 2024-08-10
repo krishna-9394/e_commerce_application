@@ -3,6 +3,7 @@ import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
 import 'package:e_commerce_application/common/widgets/custom_shape/curved_edges/curved_edges_widget.dart';
 import 'package:e_commerce_application/common/widgets/images/t_rounded_image.dart';
 import 'package:e_commerce_application/common/widgets/products/favourite_icon/favourite_icon.dart';
+import 'package:e_commerce_application/features/shop/controllers/product/favourite_controller.dart';
 import 'package:e_commerce_application/features/shop/controllers/product/image_slider_cotroller.dart';
 import 'package:e_commerce_application/features/shop/models/products/product_model.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
@@ -89,8 +90,8 @@ class TProductImageSlider extends StatelessWidget {
               showBackArrow: true,
               actions: [
                 IconButton(
-                    onPressed: () {},
-                    icon: const TFavouriteIcons()),
+                    onPressed: (){},
+                    icon: TFavouriteIcons(productId: product.id,)),
               ],
             )
           ],

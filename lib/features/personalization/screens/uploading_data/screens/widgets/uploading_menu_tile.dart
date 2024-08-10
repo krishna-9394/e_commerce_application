@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/features/uploading_data/controllers/upload_data_controller.dart';
+import 'package:e_commerce_application/features/personalization/controllers/upload_data_controller.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,7 +1,7 @@
 import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
-import 'package:e_commerce_application/features/uploading_data/controllers/upload_data_controller.dart';
-import 'package:e_commerce_application/features/uploading_data/screens/widgets/uploading_menu_tile.dart';
+import 'package:e_commerce_application/features/personalization/controllers/upload_data_controller.dart';
+import 'package:e_commerce_application/features/personalization/screens/uploading_data/screens/widgets/uploading_menu_tile.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
