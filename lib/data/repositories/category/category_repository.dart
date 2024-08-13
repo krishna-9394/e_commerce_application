@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_application/data/services/firebase_storage_services.dart';
 import 'package:e_commerce_application/features/shop/models/category_model.dart';
+import 'package:e_commerce_application/utils/constants/firebase_directory_name_constants.dart';
 import 'package:e_commerce_application/utils/exceptions/firebase_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/format_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/platform_exceptions.dart';
@@ -16,7 +17,7 @@ class CategoryRepository extends GetxController {
   /// Get all Categories
   Future<List<CategoryModel>> getAllCategories() async {
     try {
-      final snapshot = await _db.collection('categories').get();
+      final snapshot = await _db.collection(TDirectoryNames.categories).get();
       final list = snapshot.docs
           .map((document) => CategoryModel.fromSnapshot(document))
           .toList();
@@ -35,7 +36,7 @@ class CategoryRepository extends GetxController {
   /// Get all SubCategories
   Future<List<CategoryModel>> getSubCategories(String categoryId) async {
     try {
-      final snapshot = await _db.collection('categories').where('ParentId', isEqualTo: categoryId).get();
+      final snapshot = await _db.collection(TDirectoryNames.categories).where('ParentId', isEqualTo: categoryId).get();
       final list = snapshot.docs
           .map((document) => CategoryModel.fromSnapshot(document))
           .toList();
@@ -62,12 +63,12 @@ class CategoryRepository extends GetxController {
         final file = await storage.getImageDataFromAssets(category.image);
         // Upload image and get its URL
         final url =
-            await storage.uploadImageData('categories', file, category.name);
+            await storage.uploadImageData(TDirectoryNames.categories, file, category.name);
         // Assign url to category.image attribute
         category.image = url;
         // Store Category in Firestore
         await _db
-            .collection('categories')
+            .collection(TDirectoryNames.categories)
             .doc(category.id)
             .set(category.toJson());
       }

@@ -6,6 +6,7 @@ import 'package:e_commerce_application/common/widgets/products/favourite_icon/fa
 import 'package:e_commerce_application/common/widgets/texts/brand_title_text_with_verified_symbol.dart';
 import 'package:e_commerce_application/common/widgets/texts/product_price_text.dart';
 import 'package:e_commerce_application/common/widgets/texts/product_title_text.dart';
+import 'package:e_commerce_application/features/shop/controllers/product/cart_controller.dart';
 import 'package:e_commerce_application/features/shop/controllers/product/product_controller.dart';
 import 'package:e_commerce_application/features/shop/models/products/product_model.dart';
 import 'package:e_commerce_application/features/shop/screens/product_detail/product.dart';
@@ -29,6 +30,7 @@ class TVerticalProductCard extends StatelessWidget {
     final salePercentage =
         controller.calculateSaleDiscount(product.price, product.salePrice);
     final price = controller.getProductPrice(product);
+    print("Product URL: ${product.thumbnail}");
     return GestureDetector(
       onTap: () => Get.to(ProductDetails(product: product)),
       child: Container(
@@ -134,30 +136,66 @@ class TVerticalProductCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: TColors.dark,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(TSizes.cardRadiusMd),
-                      bottomRight: Radius.circular(TSizes.productImageRadius),
-                    ),
-                  ),
-                  child: const SizedBox(
-                    height: TSizes.iconLg * 1.2,
-                    width: TSizes.iconLg * 1.2,
-                    child: Center(
-                      child: Icon(
-                        Iconsax.add,
-                        color: TColors.white,
-                      ),
-                    ),
-                  ),
+                // Add to cart
+                ProductCardAddToCartButton(
+                  product: product,
                 ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class ProductCardAddToCartButton extends StatelessWidget {
+  final ProductModel product;
+  const ProductCardAddToCartButton({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = CartController.instance;
+    return GestureDetector(
+      onTap: () {
+        if (product.productType == ProductType.single.toString()) {
+          final cartItem = controller.convertToCartItem(product, 1);
+          controller.addOneToCart(cartItem);
+        } else {
+          Get.to(()=> ProductDetails(product: product));
+        }
+      },
+      child: Obx(() {
+        final productQuantityInCart =
+            controller.getProductQuantityInCart(product.id);
+        return Container(
+          decoration: BoxDecoration(
+            color: productQuantityInCart > 0 ? TColors.primary : TColors.dark,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(TSizes.cardRadiusMd),
+              bottomRight: Radius.circular(TSizes.productImageRadius),
+            ),
+          ),
+          child: SizedBox(
+            height: TSizes.iconLg * 1.2,
+            width: TSizes.iconLg * 1.2,
+            child: Center(
+              child: productQuantityInCart > 0
+                  ? Text(
+                      productQuantityInCart.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge!
+                          .apply(color: TColors.white),
+                    )
+                  : const Icon(
+                      Iconsax.add,
+                      color: TColors.white,
+                    ),
+            ),
+          ),
+        );
+      }),
     );
   }
 }

@@ -29,7 +29,7 @@ class TProductImageSlider extends StatelessWidget {
         color: isDark ? TColors.darkGrey : TColors.light,
         child: Stack(
           children: [
-            /// Larged Image
+            /// Large Image
             Container(
               padding: const EdgeInsets.all(TSizes.productImageRadius * 2),
               height: 400,

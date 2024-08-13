@@ -6,8 +6,8 @@ import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
 import 'package:e_commerce_application/common/widgets/products/cart/cart_counter_icon_button.dart';
 import 'package:e_commerce_application/common/widgets/shimmer/brands_shimmer.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
-import 'package:e_commerce_application/features/shop/controllers/product/brand_controller.dart';
-import 'package:e_commerce_application/features/shop/controllers/product/category_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/brand_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/category_controller.dart';
 import 'package:e_commerce_application/features/shop/models/brand_model.dart';
 import 'package:e_commerce_application/features/shop/screens/brands/all_brands.dart';
 import 'package:e_commerce_application/features/shop/screens/brands/brand_products.dart';
@@ -35,10 +35,8 @@ class StoreScreen extends StatelessWidget {
             'Store',
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          actions: [
+          actions: const [
             TCartCounterIconButton(
-              color: Colors.black,
-              onPressed: () {},
             )
           ],
         ),

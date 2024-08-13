@@ -3,7 +3,7 @@ import 'package:e_commerce_application/common/widgets/images/t_rounded_image.dar
 import 'package:e_commerce_application/common/widgets/products/product_cards/horizontal_product_card.dart';
 import 'package:e_commerce_application/common/widgets/shimmer/horizontal_product_shimmer.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
-import 'package:e_commerce_application/features/shop/controllers/product/category_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/category_controller.dart';
 import 'package:e_commerce_application/features/shop/models/category_model.dart';
 import 'package:e_commerce_application/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';

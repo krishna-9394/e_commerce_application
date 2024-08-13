@@ -26,11 +26,20 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+              'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+              'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+              'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -49,38 +58,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '313865184059',
     projectId: 'e-commerce-platform-26eb1',
     storageBucket: 'e-commerce-platform-26eb1.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCrKY1lsKCw1UJaRSM3LhQ7Cw5Tes6K98A',
-    appId: '1:313865184059:ios:d3ab7ff760c38efe0a0d1e',
-    messagingSenderId: '313865184059',
-    projectId: 'e-commerce-platform-26eb1',
-    storageBucket: 'e-commerce-platform-26eb1.appspot.com',
-    androidClientId: '313865184059-erpv31tc4i30983vb1orh57c9mij7j4c.apps.googleusercontent.com',
-    iosClientId: '313865184059-2unvo0pbkcd0832v6meke8rbenb1a633.apps.googleusercontent.com',
-    iosBundleId: 'com.example.eCommerceApplication',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCrKY1lsKCw1UJaRSM3LhQ7Cw5Tes6K98A',
-    appId: '1:313865184059:ios:d3ab7ff760c38efe0a0d1e',
-    messagingSenderId: '313865184059',
-    projectId: 'e-commerce-platform-26eb1',
-    storageBucket: 'e-commerce-platform-26eb1.appspot.com',
-    androidClientId: '313865184059-erpv31tc4i30983vb1orh57c9mij7j4c.apps.googleusercontent.com',
-    iosClientId: '313865184059-2unvo0pbkcd0832v6meke8rbenb1a633.apps.googleusercontent.com',
-    iosBundleId: 'com.example.eCommerceApplication',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCDuf5yNRD66NcqtTw7uUtG3gL22icSOUI',
-    appId: '1:313865184059:web:f6269dbc6e2998620a0d1e',
-    messagingSenderId: '313865184059',
-    projectId: 'e-commerce-platform-26eb1',
-    authDomain: 'e-commerce-platform-26eb1.firebaseapp.com',
-    storageBucket: 'e-commerce-platform-26eb1.appspot.com',
-    measurementId: 'G-CKE65FZ239',
   );
 
 }

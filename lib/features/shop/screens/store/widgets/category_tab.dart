@@ -2,7 +2,7 @@ import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
 import 'package:e_commerce_application/common/widgets/products/product_cards/vertical_product_card.dart';
 import 'package:e_commerce_application/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
-import 'package:e_commerce_application/features/shop/controllers/product/category_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/category_controller.dart';
 import 'package:e_commerce_application/features/shop/models/category_model.dart';
 import 'package:e_commerce_application/features/shop/screens/all_products/all_products.dart';
 import 'package:e_commerce_application/features/shop/screens/store/widgets/category_brand.dart';

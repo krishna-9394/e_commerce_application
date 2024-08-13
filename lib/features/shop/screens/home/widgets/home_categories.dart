@@ -1,6 +1,6 @@
 import 'package:e_commerce_application/common/widgets/image_text_widgets/vertical_image_text.dart';
 import 'package:e_commerce_application/common/widgets/shimmer/category_shimmer.dart';
-import 'package:e_commerce_application/features/shop/controllers/product/category_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/category_controller.dart';
 import 'package:e_commerce_application/features/shop/screens/sub_category/sub_category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,25 +1,32 @@
+import 'package:e_commerce_application/features/shop/controllers/product/cart_controller.dart';
+import 'package:e_commerce_application/features/shop/screens/cart/cart.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
+import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TCartCounterIconButton extends StatelessWidget {
-  final Color color;
-  final VoidCallback onPressed;
+  final Color? iconColor, counterBackgroundColor, counterTextColor;
   const TCartCounterIconButton({
     super.key,
-    required this.color,
-    required this.onPressed,
+    this.iconColor,
+    this.counterBackgroundColor,
+    this.counterTextColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CartController());
+    final dark = THelperFunctions.isDarkMode(context);
+
     return Stack(
       children: [
         IconButton(
-          onPressed: onPressed,
+          onPressed: () => Get.to(()=> const CartScreen()),
           icon: Icon(
             Iconsax.shopping_bag,
-            color: color,
+            color: iconColor,
           ),
         ),
         Positioned(
@@ -32,13 +39,13 @@ class TCartCounterIconButton extends StatelessWidget {
                 color: TColors.black,
               ),
               child: Center(
-                  child: Text(
-                '2',
-                style: Theme.of(context).textTheme.labelLarge!.apply(
-                      fontSizeFactor: 0.8,
-                      color: Colors.white,
-                    ),
-              )),
+                  child: Obx(() => Text(
+                        controller.noOfCartItems.value.toString(),
+                        style: Theme.of(context).textTheme.labelLarge!.apply(
+                              fontSizeFactor: 0.8,
+                              color: counterTextColor ?? (dark? TColors.black : TColors.white),
+                            ),
+                      ))),
             ))
       ],
     );

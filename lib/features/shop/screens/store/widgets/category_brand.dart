@@ -1,7 +1,7 @@
 import 'package:e_commerce_application/common/widgets/brands/brand_show_case.dart';
 import 'package:e_commerce_application/common/widgets/shimmer/box_shimmer.dart';
 import 'package:e_commerce_application/common/widgets/shimmer/list_tile_shimmer.dart';
-import 'package:e_commerce_application/features/shop/controllers/product/brand_controller.dart';
+import 'package:e_commerce_application/features/shop/controllers/brand_controller.dart';
 import 'package:e_commerce_application/features/shop/models/category_model.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/helpers/cloud_helper_functions.dart';

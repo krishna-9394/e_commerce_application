@@ -77,6 +77,7 @@ class ProductRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
   /// Get list of all products
   Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
     try {

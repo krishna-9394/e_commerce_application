@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_application/data/services/firebase_storage_services.dart';
 import 'package:e_commerce_application/features/shop/models/banner_model.dart';
+import 'package:e_commerce_application/utils/constants/firebase_directory_name_constants.dart';
 import 'package:e_commerce_application/utils/exceptions/firebase_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/format_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/platform_exceptions.dart';
@@ -17,7 +18,7 @@ class BannerRepository extends GetxController {
   Future<List<BannerModel>> fetchBanners() async {
     try {
       final snapshot = await _db
-          .collection('banners')
+          .collection(TDirectoryNames.banners)
           .where('Active', isEqualTo: true)
           .get();
       final list = snapshot.docs
@@ -48,11 +49,11 @@ class BannerRepository extends GetxController {
         final file = await storage.getImageDataFromAssets(banner.imageUrl);
         // Upload image and get its URL
         final url =
-            await storage.uploadImageData('banners', file, banner.imageUrl);
+            await storage.uploadImageData(TDirectoryNames.banners, file, banner.imageUrl);
         // Assign url to Banner.ImageUrl attribute
         banner.imageUrl = url;
         // Store Banner in Firestore
-        await _db.collection('banners').doc().set(banner.toJson());
+        await _db.collection(TDirectoryNames.banners).doc().set(banner.toJson());
       }
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.toString());

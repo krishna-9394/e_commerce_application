@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TProductQuantityWithRemoveButton extends StatelessWidget {
+  final int quantity;
+  final VoidCallback? add, remove;
   const TProductQuantityWithRemoveButton({
-    super.key,
+    super.key, required this.quantity, this.add, this.remove,
   });
 
   @override
@@ -19,6 +21,7 @@ class TProductQuantityWithRemoveButton extends StatelessWidget {
           width: 32,
           height: 32,
           size: TSizes.md,
+          onPressed: remove,
           color: THelperFunctions.isDarkMode(context)
               ? Colors.white
               : Colors.black,
@@ -28,17 +31,19 @@ class TProductQuantityWithRemoveButton extends StatelessWidget {
         ),
         const SizedBox(width: TSizes.spaceBtwItems),
         Text(
-          '2',
+          quantity.toString(),
           style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(width: TSizes.spaceBtwItems),
-        const TCircularIcon(
+        TCircularIcon(
             icon: Iconsax.add,
             width: 32,
             height: 32,
             size: TSizes.md,
             color: Colors.black,
-            backgroundColor: TColors.primary),
+            backgroundColor: TColors.primary,
+          onPressed: add,
+        ),
       ],
     );
   }
