@@ -1,11 +1,17 @@
 import 'package:e_commerce_application/common/widgets/custom_shape/container/circular_container.dart';
+import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
 import 'package:e_commerce_application/data/repositories/address/address_repository.dart';
 import 'package:e_commerce_application/features/personalization/models/address_model.dart';
+import 'package:e_commerce_application/features/personalization/screens/addresses/add_new_address.dart';
 import 'package:e_commerce_application/features/personalization/screens/addresses/addresses.dart';
+import 'package:e_commerce_application/features/personalization/screens/addresses/widget/single_address.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
+import 'package:e_commerce_application/utils/constants/sizes.dart';
+import 'package:e_commerce_application/utils/helpers/cloud_helper_functions.dart';
 import 'package:e_commerce_application/utils/helpers/network_manager.dart';
 import 'package:e_commerce_application/utils/popups/full_screen_loaders.dart';
 import 'package:e_commerce_application/utils/popups/loaders.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +32,7 @@ class AddressController extends GetxController {
   final Rx<AddressModel> selectedAddress = AddressModel.empty().obs;
 
   // Fetch all user specific addresses
-  Future<List<AddressModel>> allUserAddresses() async {
+  Future<List<AddressModel>> getAllUserAddresses() async {
     try {
       final addresses = await addressRepository.fetchUsersAddress();
       selectedAddress.value = addresses.firstWhere(
@@ -142,5 +148,53 @@ class AddressController extends GetxController {
     state.clear();
     country.clear();
     addressFormKey.currentState?.reset();
+  }
+
+  Future<dynamic> selectNewAddressPopup(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (_) => Container(
+              padding: const EdgeInsets.all(TSizes.lg),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TSectionHeading(
+                    title: 'Select Address',
+                    showActionButton: false,
+                  ),
+                  Expanded(
+                    child: FutureBuilder(
+                      future: getAllUserAddresses(),
+                      builder: (_, snapshot) {
+                        final response =
+                            TCloudHelperFunctions.checkMultiRecordState(
+                                snapshot: snapshot);
+                        if (response != null) return response;
+                    
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (_, index) => TSingleAddress(
+                                address: snapshot.data![index],
+                                onTap: () async {
+                                  await selectedAddress(snapshot.data![index]);
+                                  Get.back();
+                                }));
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: TSizes.defaultSpace * 2),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      child: const Text("Add new Address"),
+                      onPressed: () => Get.to(
+                        () => const AddNewAddressScreen(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ));
   }
 }

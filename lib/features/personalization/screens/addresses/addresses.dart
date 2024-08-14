@@ -36,7 +36,7 @@ class UserAddressScreen extends StatelessWidget {
           child: Obx(
             () => FutureBuilder(
               key: Key(controller.refreshData.value.toString()),
-                future: controller.allUserAddresses(),
+                future: controller.getAllUserAddresses(),
                 builder: (context, snapshot) {
                   // Helper Function: handles Loaders, No Records, or Error Message
                   final response = TCloudHelperFunctions.checkMultiRecordState(

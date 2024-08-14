@@ -1,12 +1,17 @@
 import 'package:e_commerce_application/utils/constants/currency.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
+import 'package:e_commerce_application/utils/helpers/pricing_calculator.dart';
 import 'package:flutter/material.dart';
+
+import '../../../controllers/product/cart_controller.dart';
 
 class TBillingAmountSection extends StatelessWidget {
   const TBillingAmountSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = CartController.instance;
+    final subTotal = controller.totalCartPrice.value;
     return Column(
       children: [
         Row(
@@ -17,7 +22,7 @@ class TBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '${Currency.currencySign}1464.0',
+              '${Currency.currencySign}$subTotal',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -30,7 +35,7 @@ class TBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '${Currency.currencySign}5.0',
+              '${Currency.currencySign}${TPricingCalculator.calculateShippingCost(subTotal, 'India')}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -43,7 +48,7 @@ class TBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '${Currency.currencySign}146.0',
+              '${Currency.currencySign}${TPricingCalculator.calculateTax(subTotal, 'India')}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -57,7 +62,7 @@ class TBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             Text(
-              '${Currency.currencySign}1996.0',
+              '${Currency.currencySign}${TPricingCalculator.calculateTotalPrice(subTotal, 'India')}',
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],

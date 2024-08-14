@@ -155,7 +155,7 @@ class ProductCardAddToCartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CartController.instance;
+    final controller = Get.put(CartController());
     return GestureDetector(
       onTap: () {
         if (product.productType == ProductType.single.toString()) {

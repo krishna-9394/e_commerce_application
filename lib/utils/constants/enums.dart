@@ -9,7 +9,7 @@ enum Role { customer, shopkeeper, admin }
 
 enum TextSizes { small, medium, large }
 
-enum OrderStatus { processing, shipped, delivered }
+enum OrderStatus { processing, shipped, delivered, pending }
 
 enum PaymentMethods {
   paypal,

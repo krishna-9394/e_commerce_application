@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = CartController.instance;
+    final controller = Get.put(CartController());
     return Scaffold(
       appBar: TAppBar(
         showBackArrow: true,

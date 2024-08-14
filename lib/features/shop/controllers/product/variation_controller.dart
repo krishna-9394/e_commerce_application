@@ -36,7 +36,7 @@ class VariationController extends GetxController {
 
     // show the selected Variations image as a Main Images
     if (selectedVariation.id.isNotEmpty) {
-      final cartController = CartController.instance;
+      final cartController = Get.put(CartController());
       cartController.productQuantityInCart.value = cartController.getVariationQuantityInCart(product.id, selectedVariation.id);
     }
 
