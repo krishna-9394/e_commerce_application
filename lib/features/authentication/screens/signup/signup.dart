@@ -1,6 +1,6 @@
 import 'package:e_commerce_application/common/widgets/authentication_widgets/bottom_icon_button.dart';
 import 'package:e_commerce_application/common/widgets/authentication_widgets/divider.dart';
-import 'package:e_commerce_application/features/authentication/screens/singup/widgets/signup_form.dart';
+import 'package:e_commerce_application/features/authentication/screens/signup/widgets/signup_form.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';

@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
+import '../../features/personalization/models/user_model.dart';
 
 class TLocalStorage {
   late final GetStorage _storage;
@@ -29,6 +32,49 @@ class TLocalStorage {
     return _storage.read<T>(key);
   }
 
+  // Method to save UserModel
+  Future<void> saveUser(UserModel user) async {
+    await _storage.write('user', user.toJson());
+  }
+
+  // Method to get UserModel
+  UserModel? getUser() {
+    final userData = _storage.read<Map<String, dynamic>>('user');
+    if (userData != null) {
+      return UserModel.fromJson(userData);
+    }
+    return null;
+  }
+
+  // Method to cache the profile picture
+  Future<void> cacheProfilePicture(String imageUrl) async {
+    try {
+      final response = await http.get(Uri.parse(imageUrl));
+      if (response.statusCode == 200) {
+        // Convert image to bytes and store it in GetStorage
+        await _storage.write(imageUrl, response.bodyBytes);
+      }
+    } catch (e) {
+      throw "Something went wrong while caching profile picture";
+    }
+  }
+
+  // Method to get cached profile picture as bytes
+  Uint8List getCachedProfilePicture(String imageUrl) {
+    Uint8List? cachedImageArray = _storage.read<Uint8List>(imageUrl);
+    // if cachedImageArray is null then i fill the image with specific imageUrl and store the image with imageUrl
+    if(cachedImageArray==null) {
+      cacheProfilePicture(imageUrl);
+      cachedImageArray = _storage.read<Uint8List>(imageUrl);
+    }
+    return cachedImageArray!;
+  }
+
+  // Method to remove UserModel
+  Future<void> removeUser() async {
+    await _storage.remove('user');
+  }
+
   // Generic method to remove data
   Future<void> removeData(String key) async {
     await _storage.remove(key);
@@ -39,22 +85,3 @@ class TLocalStorage {
     await _storage.erase();
   }
 }
-
-
-/// *** *** *** *** *** Example *** *** *** *** *** ///
-
-// LocalStorage localStorage = LocalStorage();
-//
-// // Save data
-// localStorage.saveData('username', 'JohnDoe');
-//
-// // Read data
-// String? username = localStorage.readData<String>('username');
-// print('Username: $username'); // Output: Username: JohnDoe
-//
-// // Remove data
-// localStorage.removeData('username');
-//
-// // Clear all data
-// localStorage.clearAll();
-

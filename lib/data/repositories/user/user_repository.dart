@@ -5,6 +5,7 @@ import 'package:e_commerce_application/features/personalization/models/user_mode
 import 'package:e_commerce_application/utils/exceptions/firebase_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/format_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/platform_exceptions.dart';
+import 'package:e_commerce_application/utils/local_storage/storage_utility.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -122,4 +123,48 @@ class UserRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
+  Future<void> saveUserLocally(UserModel user) async {
+    try {
+      await TLocalStorage.instance().saveUser(user);
+    } catch(e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<UserModel> getCachedUser() async {
+    try {
+      UserModel? user = TLocalStorage.instance().getUser();
+      if(user==null) return UserModel.empty();
+      return user;
+    } catch(e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<void> removeCachedUser() async {
+    try {
+      await TLocalStorage.instance().removeUser();
+    } catch(e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<void> cachedProfilePicture(String imageUrl) async {
+    try {
+      await TLocalStorage.instance().cacheProfilePicture(imageUrl);
+    } catch(e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
+  Future<Uint8List> getCachedProfilePicture(String imageUrl) async {
+    try {
+      Uint8List cachedByteArray = TLocalStorage.instance().getCachedProfilePicture(imageUrl);
+      return cachedByteArray;
+    } catch(e) {
+      throw 'Something went wrong. Please try again.';
+    }
+  }
+
 }

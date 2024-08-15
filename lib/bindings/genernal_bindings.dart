@@ -7,12 +7,14 @@ import 'package:e_commerce_application/features/shop/controllers/product/variati
 import 'package:e_commerce_application/utils/helpers/network_manager.dart';
 import 'package:get/get.dart';
 
+import '../features/personalization/controllers/user_controller.dart';
 import '../utils/local_storage/storage_utility.dart';
 
 class GeneralBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(NetworkManager());
+    Get.put(UserController());
     Get.put(VariationController());
     Get.put(CheckoutController());
     Get.put(AddressController());

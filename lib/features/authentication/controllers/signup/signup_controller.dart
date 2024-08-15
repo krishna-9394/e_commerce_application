@@ -1,6 +1,6 @@
 import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/data/repositories/user/user_repository.dart';
-import 'package:e_commerce_application/features/authentication/screens/singup/verify_email.dart';
+import 'package:e_commerce_application/features/authentication/screens/signup/verify_email.dart';
 import 'package:e_commerce_application/features/personalization/models/user_model.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/helpers/network_manager.dart';
@@ -20,6 +20,7 @@ class SignupController extends GetxController {
   final email = TextEditingController();
   final phoneNumber = TextEditingController();
   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
   GlobalKey<FormState> signupKey = GlobalKey<FormState>();
   // Rx variables
   final hidePassword = true.obs;
@@ -36,7 +37,7 @@ class SignupController extends GetxController {
   }
 
   // Signup
-  Future<void> singup() async {
+  Future<void> singUp() async {
     try {
       // start Loading
       TFullScreenLoader.openLoadingDialog(
@@ -52,6 +53,8 @@ class SignupController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
+
+
       // Privacy Policy
       if (!privacyPolicy.value) {
         TLoaders.warningSnackBar(
@@ -67,6 +70,8 @@ class SignupController extends GetxController {
         email.text.trim(),
         password.text.trim(),
       );
+
+      final role = await AuthenticationRepository.instance.fetchRole(email.text.trim());
       // Save Authenticated user data in the Firebase Firestore
       final newUser = UserModel(
         id: userCredential.user!.uid,
@@ -76,9 +81,11 @@ class SignupController extends GetxController {
         email: email.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
         profilePicture: "",
+        role: role
       );
 
       final userRepository = Get.put(UserRepository());
+      // saving the user records online.
       await userRepository.saveUserRecord(newUser);
 
       TFullScreenLoader.stopLoading();
@@ -86,8 +93,8 @@ class SignupController extends GetxController {
       // show success message
       TLoaders.successSnackBar(
           title: "Congratulations",
-          message: "Your account has been created! Verfiy email to continue.");
-      // move to verfiy Email Screen
+          message: "Your account has been created! Verify email to continue.");
+      // move to verify Email Screen
       Get.to(() => VerifyEmailScreen(
             email: newUser.email,
           ));

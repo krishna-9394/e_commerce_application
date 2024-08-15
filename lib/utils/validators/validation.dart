@@ -49,6 +49,19 @@ class TValidator {
     return null;
   }
 
+  static String? validateConfirmPassword(String? value, String password) {
+
+    if (value == null || value.isEmpty) {
+      return 'Password is not matching.';
+    }
+
+    if (password.compareTo(value)!=0) {
+      return 'Password is not matching.';
+    }
+
+    return null;
+  }
+
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
       return 'Phone number is required.';

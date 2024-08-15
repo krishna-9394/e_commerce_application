@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_application/data/repositories/user/user_repository.dart';
 import 'package:e_commerce_application/features/authentication/screens/login/login.dart';
-import 'package:e_commerce_application/features/authentication/screens/singup/verify_email.dart';
+import 'package:e_commerce_application/features/authentication/screens/signup/verify_email.dart';
 import 'package:e_commerce_application/features/authentication/screens/onboarding/onboarding.dart';
+import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/navigation_menu.dart';
 import 'package:e_commerce_application/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:e_commerce_application/utils/exceptions/firebase_exceptions.dart';
@@ -16,14 +18,18 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../features/personalization/models/user_model.dart';
+import '../../../utils/constants/enums.dart';
+
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
   // Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // Get Authencticated user data
+  // Get Authenticated user data
   User? get authUser => _auth.currentUser;
 
   // called from main.dart on app launch
@@ -41,6 +47,13 @@ class AuthenticationRepository extends GetxController {
       if (user.emailVerified) {
         // Email is verified
         await TLocalStorage.init(user.uid);
+        // Check if user data exists
+        UserModel? cachedUser = TLocalStorage.instance().getUser();
+        if (cachedUser == null) {
+          // User data exists, proceed to the main screen
+          await UserController.instance.saveUserLocally();
+
+        }
         Get.offAll(() => const NavigationMenu());
       } else {
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser!.email!));
@@ -48,10 +61,11 @@ class AuthenticationRepository extends GetxController {
     } else {
       deviceStorage.writeIfNull('isFirstTime', true);
       deviceStorage.read('isFirstTime') != true
-          ? Get.offAll(const LoginScreen())
-          : Get.offAll(const OnboardingScreen());
+          ? Get.offAll(() => const LoginScreen())
+          : Get.offAll(() => const OnboardingScreen());
     }
   }
+
 
   /* ----------------------------Email & Password SignIn---------------------- */
   /// SignIn
@@ -89,6 +103,46 @@ class AuthenticationRepository extends GetxController {
       throw TPlatformException(e.code).message;
     } catch (e) {
       throw "Something went wrong! Please try again.";
+    }
+  }
+
+  Future<Role> fetchRole(String email) async {
+    try {
+      final user = _auth.currentUser;
+      if(user==null) {
+        throw Exception('No user is signed in.');
+      }
+      final email = user.email;
+      // Check if the email is in the admins collection
+      final adminSnapshot = await _db
+          .collection('admin')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (adminSnapshot.docs.isNotEmpty) {
+        return Role.admin;
+      }
+
+      // Check if the email is in the retailers collection
+      final retailerSnapshot = await _db
+          .collection('retailer')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (retailerSnapshot.docs.isNotEmpty) {
+        return Role.shopkeeper;
+      }
+
+      // If the email is not found in either collection, default to customer
+      return Role.customer;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.toString());
+    } on FormatException catch (e) {
+      throw TFormatException(e.toString());
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.toString());
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
     }
   }
 
@@ -160,7 +214,7 @@ class AuthenticationRepository extends GetxController {
         accessToken: googleAuth?.accessToken,
       );
 
-      // once signed in, return the usercredentials
+      // once signed in, return the credentials
       return await _auth.signInWithCredential(credentials);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
@@ -180,6 +234,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
+      await TLocalStorage.instance().removeUser();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
@@ -197,6 +252,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
       await _auth.currentUser!.delete();
+      await TLocalStorage.instance().removeUser();
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

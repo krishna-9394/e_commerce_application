@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
 import 'package:e_commerce_application/data/repositories/user/user_repository.dart';
 import 'package:e_commerce_application/features/authentication/screens/login/login.dart';
@@ -47,7 +49,7 @@ class UserController extends GetxController {
   }
 
   // save user records
-  Future<void> saveUserRecord(UserCredential? userCredential) async {
+  Future<UserModel> saveUserRecord(UserCredential? userCredential) async {
     try {
       // First update the Rx-User and then check if user data is already stored. if not store new data
       await fetchUserRecords();
@@ -59,6 +61,8 @@ class UserController extends GetxController {
           final nameParts = UserModel.nameParts(user!.displayName ?? "");
           final username = UserModel.getUsername(user.displayName ?? "");
 
+          final role = await AuthenticationRepository.instance.fetchRole(userCredential.user!.email ?? "");
+
           final newUser = UserModel(
             id: userCredential.user!.uid,
             firstName: nameParts[0],
@@ -67,17 +71,22 @@ class UserController extends GetxController {
             email: userCredential.user!.email ?? "",
             phoneNumber: userCredential.user!.phoneNumber ?? "",
             profilePicture: userCredential.user!.photoURL ?? "",
+            role: role,
           );
 
-          // save user data
+          // save user data remotely
           await userRepository.saveUserRecord(newUser);
+
+          return newUser;
         }
       }
+      return UserModel.empty();
     } catch (e) {
       TLoaders.warningSnackBar(
           title: 'Data not saved',
           message:
               'Something went wrong while saving your information. You can re-save your data in your profile.');
+      return UserModel.empty();
     }
   }
 
@@ -202,4 +211,65 @@ class UserController extends GetxController {
       imageUploading.value = false;
     }
   }
+
+  Future<void> saveUserLocally() async {
+    try {
+      await fetchUserRecords();
+      await userRepository.saveUserLocally(user.value);
+    } catch(e) {
+      TLoaders.errorSnackBar(
+        title: 'Oh Snap',
+        message: 'Something went wrong: $e',
+      );
+    }
+  }
+
+  Future<UserModel> getCachedUser() async {
+    try {
+      UserModel user = await userRepository.getCachedUser();
+      return user;
+    } catch(e) {
+      TLoaders.errorSnackBar(
+        title: 'Oh Snap',
+        message: 'Something went wrong: $e',
+      );
+      return UserModel.empty();
+    }
+  }
+
+  Future<void> removeCachedUser() async {
+    try {
+      await userRepository.removeCachedUser();
+    } catch(e) {
+      TLoaders.errorSnackBar(
+        title: 'Oh Snap',
+        message: 'Something went wrong: $e',
+      );
+    }
+  }
+
+  Future<Uint8List?> getCachedProfilePicture() async {
+    try {
+      Uint8List byteArray = await userRepository.getCachedProfilePicture(user.value.profilePicture);
+      return byteArray;
+    } catch(e) {
+      TLoaders.errorSnackBar(
+        title: 'Oh Snap!',
+        message: 'Something went wrong: $e',
+      );
+    }
+    return null;
+  }
+
+  Future<void> cacheProfilePicture() async {
+    try {
+      await userRepository.cachedProfilePicture(user.value.profilePicture);
+    } catch(e) {
+      TLoaders.errorSnackBar(
+        title: 'Oh Snap!',
+        message: 'Something went wrong: $e',
+      );
+    }
+  }
+
 }

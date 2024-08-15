@@ -1,4 +1,5 @@
 import 'package:e_commerce_application/data/repositories/authentication/authentication_repository.dart';
+import 'package:e_commerce_application/data/repositories/user/user_repository.dart';
 import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/helpers/network_manager.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../../personalization/models/user_model.dart';
+
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
@@ -17,7 +20,7 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
-  final userController = Get.put(UserController());
+
   // Rx variables
   final hidePassword = true.obs;
   final rememberMe = false.obs;
@@ -55,8 +58,8 @@ class LoginController extends GetxController {
           await AuthenticationRepository.instance.signInWithGoogle();
 
       // save User Records
-      await userController.saveUserRecord(userCredentials);
-      
+      await UserController.instance.saveUserRecord(userCredentials);
+
       // Remove loading animation
       TFullScreenLoader.stopLoading();
 

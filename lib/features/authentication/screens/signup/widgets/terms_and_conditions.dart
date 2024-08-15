@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/features/authentication/controllers/signup/singup_controller.dart';
+import 'package:e_commerce_application/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';

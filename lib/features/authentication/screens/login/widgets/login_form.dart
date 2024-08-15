@@ -1,12 +1,13 @@
 import 'package:e_commerce_application/features/authentication/controllers/login/login_controller.dart';
 import 'package:e_commerce_application/features/authentication/screens/password_configuration/forgot_password.dart';
-import 'package:e_commerce_application/features/authentication/screens/singup/signup.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';
 import 'package:e_commerce_application/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../signup/signup.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({

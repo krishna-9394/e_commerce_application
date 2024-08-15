@@ -1,5 +1,5 @@
-import 'package:e_commerce_application/features/authentication/controllers/signup/singup_controller.dart';
-import 'package:e_commerce_application/features/authentication/screens/singup/widgets/terms_and_conditions.dart';
+import 'package:e_commerce_application/features/authentication/controllers/signup/signup_controller.dart';
+import 'package:e_commerce_application/features/authentication/screens/signup/widgets/terms_and_conditions.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/constants/text_strings.dart';
 import 'package:e_commerce_application/utils/validators/validation.dart';
@@ -93,27 +93,38 @@ class SignupForm extends StatelessWidget {
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
-          /// Role
-          TextFormField(
-            controller: controller.phoneNumber,
-            expands: false,
-            validator: (value) => TValidator.validatePhoneNumber(value),
-            decoration: const InputDecoration(
-              labelText: TTexts.phoneNo,
-              prefixIcon: Icon(Iconsax.call),
-            ),
-          ),
-          const SizedBox(height: TSizes.spaceBtwInputFields),
-
           /// Password
           Obx(
-            () => TextFormField(
+                () => TextFormField(
               controller: controller.password,
               expands: false,
               obscureText: controller.hidePassword.value,
               validator: (value) => TValidator.validatePassword(value),
               decoration: InputDecoration(
                 labelText: TTexts.password,
+                prefixIcon: const Icon(Iconsax.password_check),
+                suffixIcon: IconButton(
+                  onPressed: () => controller.updatePasswordStatus(),
+                  icon: Icon(
+                    controller.hidePassword.value
+                        ? Iconsax.eye_slash
+                        : Iconsax.eye,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: TSizes.spaceBtwInputFields),
+
+          /// Confirm Password
+          Obx(
+            () => TextFormField(
+              controller: controller.confirmPassword,
+              expands: false,
+              obscureText: controller.hidePassword.value,
+              validator: (value) => TValidator.validateConfirmPassword(value, controller.password.value.toString()),
+              decoration: InputDecoration(
+                labelText: TTexts.confirmPassword,
                 prefixIcon: const Icon(Iconsax.password_check),
                 suffixIcon: IconButton(
                   onPressed: () => controller.updatePasswordStatus(),
@@ -137,7 +148,7 @@ class SignupForm extends StatelessWidget {
             /// sized box is used to keep the button long
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => controller.singup(),
+              onPressed: () => controller.singUp(),
               child: const Text(TTexts.createAccount),
             ),
           ),

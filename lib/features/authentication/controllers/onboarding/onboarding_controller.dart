@@ -24,11 +24,10 @@ class OnBoardingController extends GetxController {
     if (currentPageIndex.value == 2) {
       final deviceStorage = GetStorage();
       deviceStorage.write('isFirstTime', false);
-      Get.offAll(const LoginScreen());
+      Get.offAll(() => const LoginScreen());
     } else {
       int page = currentPageIndex.value + 1;
       currentPageIndex.value = page;
-      TLoggerHelper.info('Index: ${currentPageIndex.value}');
       pageController.jumpToPage(page);
     }
   }
