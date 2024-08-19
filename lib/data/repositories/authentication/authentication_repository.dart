@@ -52,7 +52,6 @@ class AuthenticationRepository extends GetxController {
         if (cachedUser == null) {
           // User data exists, proceed to the main screen
           await UserController.instance.saveUserLocally();
-
         }
         Get.offAll(() => const NavigationMenu());
       } else {

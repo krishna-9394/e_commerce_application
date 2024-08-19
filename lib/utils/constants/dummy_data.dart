@@ -673,7 +673,7 @@ class TDummyData {
     BrandCategoryModel(brandId: 4.toString(), categoryId: 1.toString()),
     BrandCategoryModel(brandId: 4.toString(), categoryId: 5.toString()),
     BrandCategoryModel(brandId: 4.toString(), categoryId: 6.toString()),
-    BrandCategoryModel(brandId: 7.toString(), categoryId: 2.toString()),
+    BrandCategoryModel(brandId: 7.toString(), categoryId: 2 .toString()),
     BrandCategoryModel(brandId: 1.toString(), categoryId: 1.toString()),
     BrandCategoryModel(brandId: 1.toString(), categoryId: 3.toString()),
     BrandCategoryModel(brandId: 1.toString(), categoryId: 6.toString()),

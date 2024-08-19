@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class CategoryModel {
   String id, name, image, parentId;
   bool isFeatured;
@@ -40,7 +41,8 @@ class CategoryModel {
           id: document.id,
           name: data['Name'] ?? "",
           image: data['Image'] ?? "",
-          isFeatured: data['IsFeatured'] ?? false);
+          isFeatured: data['IsFeatured'] ?? false,
+          parentId: data['ParentId'] ?? "");
     } else {
       return CategoryModel.empty();
     }
