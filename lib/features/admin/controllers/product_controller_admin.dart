@@ -14,8 +14,8 @@ import '../../../utils/exceptions/firebase_exceptions.dart';
 import '../../../utils/exceptions/format_exceptions.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
 
-class BrandUploadsRepository extends GetxController {
-  static BrandUploadsRepository get instance => Get.find();
+class ProductUploadsRepository extends GetxController {
+  static ProductUploadsRepository get instance => Get.find();
 
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 

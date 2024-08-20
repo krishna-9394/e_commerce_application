@@ -3,10 +3,10 @@ import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class TShimmerEfftect extends StatelessWidget {
+class TShimmerEffect extends StatelessWidget {
   final double width, height, radius;
   final Color? color;
-  const TShimmerEfftect({
+  const TShimmerEffect({
     super.key,
     required this.width,
     required this.height,

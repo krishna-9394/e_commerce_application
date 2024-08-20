@@ -1,5 +1,5 @@
 import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -17,12 +17,12 @@ class TVerticalProductShimmer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Image
-              TShimmerEfftect(width: 180, height: 15),
+              TShimmerEffect(width: 180, height: 15),
               SizedBox(height: TSizes.spaceBtwItems),
               // Text
-              TShimmerEfftect(width: 160, height: 180),
+              TShimmerEffect(width: 160, height: 180),
               SizedBox(height: TSizes.spaceBtwItems / 2),
-              TShimmerEfftect(width: 110, height: 15),
+              TShimmerEffect(width: 110, height: 15),
             ],
           )),
     );

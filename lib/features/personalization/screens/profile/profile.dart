@@ -1,6 +1,6 @@
 import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
 import 'package:e_commerce_application/common/widgets/images/circular_image.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/common/widgets/texts/section_heading.dart';
 import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/features/personalization/screens/profile/widget/change_name.dart';
@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
                             : TImages.user;
 
                         return controller.imageUploading.value
-                            ? const TShimmerEfftect(
+                            ? const TShimmerEffect(
                                 width: 80,
                                 height: 80,
                                 radius: 80,

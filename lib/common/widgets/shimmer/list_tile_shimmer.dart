@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +11,13 @@ class TListTileShimmer extends StatelessWidget {
       children: [
         Row(
           children: [
-            TShimmerEfftect(width: 50, height: 50, radius: 50),
+            TShimmerEffect(width: 50, height: 50, radius: 50),
             SizedBox(width: TSizes.spaceBtwItems),
             Column(
               children: [
-                TShimmerEfftect(width: 100, height: 15),
+                TShimmerEffect(width: 100, height: 15),
                 SizedBox(height: TSizes.spaceBtwItems / 2),
-                TShimmerEfftect(width: 80, height: 12),
+                TShimmerEffect(width: 80, height: 12),
               ],
             )
           ],

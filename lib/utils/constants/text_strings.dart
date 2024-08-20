@@ -33,6 +33,7 @@ class TTexts {
   static const String rememberMe = "Remember Me";
   static const String isFeatured = "Is Featured";
   static const String categoryName = "Category Name";
+  static const String brandName = "Brand Name";
   static const String forgetPassword = "Forget Password?";
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_application/common/widgets/custom_shape/container/circular_container.dart';
 import 'package:e_commerce_application/common/widgets/images/t_rounded_image.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/features/shop/controllers/banner_controller.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class TPromoSlider extends StatelessWidget {
     return Obx(
       () {
         if (controller.isLoading.value) {
-          return const TShimmerEfftect(
+          return const TShimmerEffect(
             width: double.infinity,
             height: 190,
           );

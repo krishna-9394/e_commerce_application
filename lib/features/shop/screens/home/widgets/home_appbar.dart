@@ -1,5 +1,5 @@
 import 'package:e_commerce_application/common/widgets/appbar/appbar.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/common/widgets/products/cart/cart_counter_icon_button.dart';
 import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/features/shop/screens/cart/cart.dart';
@@ -31,7 +31,7 @@ class THomeAppBar extends StatelessWidget {
           ),
           Obx(() {
             if (controller.profileLoading.value) {
-              return const TShimmerEfftect(
+              return const TShimmerEffect(
                 width: 80,
                 height: 15,
               );

@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:e_commerce_application/utils/helpers/helper_functions.dart';
@@ -45,7 +45,7 @@ class TCircularImage extends StatelessWidget {
                   fit: fit,
                   color: overlay,
                   progressIndicatorBuilder: (context, url, downloadProdgress) =>
-                      TShimmerEfftect(width: width ?? 56, height: height ?? 56),
+                      TShimmerEffect(width: width ?? 56, height: height ?? 56),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : Image(

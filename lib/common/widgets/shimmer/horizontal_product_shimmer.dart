@@ -1,4 +1,4 @@
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -18,17 +18,17 @@ class THorizontalProductShimmer extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Images
-            TShimmerEfftect(width: 120, height: 120),
+            TShimmerEffect(width: 120, height: 120),
             SizedBox(width: TSizes.spaceBtwItems),
             // Text
             Column(
               children: [
                 SizedBox(height: TSizes.spaceBtwItems / 2),
-                TShimmerEfftect(width: 160, height: 15),
+                TShimmerEffect(width: 160, height: 15),
                 SizedBox(height: TSizes.spaceBtwItems / 2),
-                TShimmerEfftect(width: 110, height: 15),
+                TShimmerEffect(width: 110, height: 15),
                 SizedBox(height: TSizes.spaceBtwItems / 2),
-                TShimmerEfftect(width: 80, height: 15),
+                TShimmerEffect(width: 80, height: 15),
               ],
             )
           ],

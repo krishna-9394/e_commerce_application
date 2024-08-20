@@ -1,5 +1,5 @@
 import 'package:e_commerce_application/common/widgets/images/circular_image.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/features/personalization/controllers/user_controller.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
@@ -22,7 +22,7 @@ class TUserProfileTile extends StatelessWidget {
       final image = networkImage.isNotEmpty ? networkImage : TImages.user;
       return ListTile(
         leading: controller.imageUploading.value
-            ? const TShimmerEfftect(
+            ? const TShimmerEffect(
                 width: 50,
                 height: 50,
                 radius: 50,

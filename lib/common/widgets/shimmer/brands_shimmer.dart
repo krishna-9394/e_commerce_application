@@ -1,5 +1,5 @@
 import 'package:e_commerce_application/common/widgets/layout/grid_layout.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:flutter/material.dart';
 
 class TBrandShimmer extends StatelessWidget {
@@ -11,7 +11,7 @@ class TBrandShimmer extends StatelessWidget {
     return TGridLayout(
       itemCount: itemCount,
       mainAxisExtent: 80,
-      itemBuiler: (_, __) => const TShimmerEfftect(width: 300, height: 80),
+      itemBuiler: (_, __) => const TShimmerEffect(width: 300, height: 80),
     );
   }
 }

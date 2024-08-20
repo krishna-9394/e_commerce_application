@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_application/common/widgets/brands/brand_card.dart';
 import 'package:e_commerce_application/common/widgets/custom_shape/container/rounded_container.dart';
-import 'package:e_commerce_application/common/widgets/shimmer/shimmer_efftect.dart';
+import 'package:e_commerce_application/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:e_commerce_application/features/shop/models/brand_model.dart';
 import 'package:e_commerce_application/features/shop/screens/brands/brand_products.dart';
 import 'package:e_commerce_application/utils/constants/colors.dart';
@@ -63,7 +63,7 @@ class TBrandShowCase extends StatelessWidget {
             imageUrl: image,
             fit: BoxFit.contain,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
-                const TShimmerEfftect(width: 100, height: 100),
+                const TShimmerEffect(width: 100, height: 100),
             errorWidget: (context, url, error) => const Icon(Icons.error),
           )),
     );

@@ -11,13 +11,14 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/images/circular_image.dart';
 import '../../../../common/widgets/shimmer/shimmer_effect.dart';
+import '../../controllers/brand_controller_admin.dart';
 
-class CategoryUpdateScreen extends StatelessWidget {
-  const CategoryUpdateScreen({super.key});
+class BrandUpdateScreen extends StatelessWidget {
+  const BrandUpdateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CategoryControllerAdmin());
+    final controller = Get.put(BrandControllerAdmin());
     return Scaffold(
       appBar: TAppBar(
         showBackArrow: false,
@@ -25,7 +26,8 @@ class CategoryUpdateScreen extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Obx(() {
-        if(controller.parentCategoryMap.isEmpty) controller.fetchCategoryModelsListAndLoadCategory();
+        if (controller.brandList.isEmpty)
+          controller.fetchBrandListAndLoadBrands();
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
@@ -60,15 +62,13 @@ class CategoryUpdateScreen extends StatelessWidget {
                         },
                       ),
                       TextButton(
-                        onPressed: () => controller.uploadCategoryImage(),
-                        child: const Text('Set the Category Picture'),
+                        onPressed: () => controller.uploadBrandImage(),
+                        child: const Text('Update the Brand logo'),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: TSizes.spaceBtwSections,
-                ),
+                const SizedBox(height: TSizes.spaceBtwSections),
                 // TextField and Button
                 Form(
                   key: controller.formKey,
@@ -77,66 +77,85 @@ class CategoryUpdateScreen extends StatelessWidget {
                       children: [
                         // Select the category to load
                         DropdownButtonFormField<String>(
-                          value: controller.selectedCategoryId.value.isEmpty
+                          value: controller.selectedBrandId.value.isEmpty
                               ? null
-                              : controller.selectedCategoryId.value,
-                          items: controller.categoryMap.entries.map((entry) {
+                              : controller.selectedBrandId.value,
+                          items: controller.brandList.map((entry) {
                             return DropdownMenuItem<String>(
                               value: entry.key,
                               child: Text(entry.value),
                             );
                           }).toList(),
                           onChanged: (newValue) {
-                            controller.selectedCategoryId.value = newValue ?? "";
-                            controller.displayTheSelectedCategory(
-                                controller.selectedCategoryId.value);
+                            controller.selectedBrandId.value = newValue ?? "";
+                            controller.displaySelectedBrand(
+                                controller.selectedBrandId.value);
                           },
                           decoration: const InputDecoration(
-                            labelText: 'Select Category',
+                            labelText: 'Select Brand',
                             prefixIcon: Icon(Iconsax.category),
                           ),
                           validator: (value) =>
-                              value == null ? 'Please select a category' : null,
+                              value == null ? 'Please select a Brand' : null,
                         ),
                         const SizedBox(height: TSizes.spaceBtwInputFields),
                         // category name
                         TextFormField(
-                          controller: controller.categoryName,
+                          controller: controller.brandName,
                           validator: (value) => TValidator.validateEmptyString(
-                              'Category Name', value),
+                              'Brand Name', value),
                           expands: false,
                           decoration: const InputDecoration(
-                            labelText: TTexts.categoryName,
+                            labelText: TTexts.brandName,
                             prefixIcon: Icon(Iconsax.user),
                           ),
                         ),
                         const SizedBox(height: TSizes.spaceBtwInputFields),
-                        // select the parentId
-                        DropdownButtonFormField<String>(
-                          value: controller.selectedParentId.value.isEmpty
-                              ? ''
-                              : controller.selectedParentId.value,
-                          items: [
-                            const DropdownMenuItem<String>(
-                              value: '', // Representing the "None" option
-                              child: Text('None'),
-                            ),
-                            ...controller.parentCategoryMap.entries.map((entry) {
-                              return DropdownMenuItem<String>(
-                                value: entry.key, // The key should be the value here
-                                child: Text(entry.value), // Display the value from the map
-                              );
-                            }),
-                          ],
-                          onChanged: (newValue) {
-                            controller.selectedParentId.value = newValue ?? "";
-                          },
-                          decoration: const InputDecoration(
-                            labelText: 'Select Parent Category',
-                            prefixIcon: Icon(Iconsax.category),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Select Category',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 10),
+                              Obx(
+                                () => Wrap(
+                                  spacing: 8.0,
+                                  runSpacing: 4.0,
+                                  children:
+                                      controller.categoryList.map((entry) {
+                                    return ChoiceChip(
+                                      label: Text(entry.value),
+                                      selected: controller.selectedCategory
+                                          .contains(entry.key),
+                                      onSelected: (bool selected) {
+                                        if (selected) {
+                                          controller.selectedCategory
+                                              .add(entry.key);
+                                        } else {
+                                          controller.selectedCategory
+                                              .remove(entry.key);
+                                        }
+                                        controller.selectedCategory.refresh();
+                                      },
+                                      selectedColor: Colors.blue,
+                                      labelStyle: TextStyle(
+                                        color: controller.selectedCategory
+                                                .contains(entry.key)
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
+                                      backgroundColor: Colors.grey[300],
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ],
                           ),
-                          validator: (value) =>
-                          value == null ? 'Please select a category' : null,
                         ),
                         const SizedBox(height: TSizes.spaceBtwInputFields),
                         // checkbox for isFeatured
@@ -168,7 +187,7 @@ class CategoryUpdateScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => controller.updateCategory(),
+                    onPressed: () => controller.updateBrandModel(),
                     child: const Text('Update'),
                   ),
                 ),

@@ -1,4 +1,6 @@
 import 'package:e_commerce_application/features/admin/screens/upload_screen.dart';
+import 'package:e_commerce_application/features/shop/models/brand_category.dart';
+import 'package:e_commerce_application/features/shop/models/brand_model.dart';
 import 'package:e_commerce_application/utils/constants/image_strings.dart';
 import 'package:e_commerce_application/utils/helpers/network_manager.dart';
 import 'package:e_commerce_application/utils/popups/full_screen_loaders.dart';
@@ -7,67 +9,66 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../data/repositories/uploads/category_upload_repository.dart';
+import '../../../data/repositories/uploads/brand_upload_repository.dart';
 import '../../../utils/constants/sizes.dart';
-import '../../shop/models/category_model.dart';
 
 class BrandControllerAdmin extends GetxController {
   static BrandControllerAdmin get instance => Get.find();
 
-  final uploadsRepository = Get.put(BrandControllerAdmin());
-  final categoryName = TextEditingController();
+  final uploadsRepository = Get.put(BrandUploadsRepository());
+  final brandName = TextEditingController();
 
   final isFeatured = false.obs;
   final imageUploading = false.obs;
   final imageUrl = "".obs;
-  final parentCategoryMap = <String, String>{}.obs;
-  final categoryMap = <String, String>{}.obs;
-  final selectedParentId = "".obs;
-  final selectedCategoryId = "".obs;
+  final productCount = 0.obs;
   final loadingData = false.obs;
-  Rx<CategoryModel> category = CategoryModel.empty().obs;
-
+  final brandModel = BrandModel.empty().obs;
+  final selectedBrandId = "".obs;
+  final categoryList = <MapEntry<String, String>>[].obs;
+  final brandList = <MapEntry<String, String>>[].obs;
+  final brandCategoryList = <BrandCategoryModel>[].obs;
+  final selectedCategory = <String>{}.obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
     initializeData();
-    loadParentCategoryList();
+    loadCategoryList();
     super.onInit();
   }
 
   void initializeData() async {
-    categoryName.text = "";
     isFeatured.value = false;
     imageUploading.value = false;
+    brandName.text = "";
     imageUrl.value = "";
-    selectedParentId.value = "";
-    parentCategoryMap.clear();
-    categoryMap.clear();
-    category.value = CategoryModel.empty();
+    productCount.value = 0;
+    selectedBrandId.value = "";
+    categoryList.clear();
+    brandList.clear();
+    brandCategoryList.clear();
+    selectedCategory.clear();
+    brandModel.value = BrandModel.empty();
   }
 
   void updateIsFeatured() {
     isFeatured.value = !isFeatured.value;
   }
 
-  Future<void> loadParentCategoryList() async {
-    try {
-      final list = await uploadsRepository.fetchCategoryList();
-      list.forEach((key, value) {
-        parentCategoryMap[key] = value;
-      });
-    } catch(e) {
-      TLoaders.errorSnackBar(title: 'Oh snap!', message: "Error in loading categories list.");
-      parentCategoryMap.clear();
-    }
+  void fetchBrandListAndLoadBrands() async {
+    loadingData.value = !loadingData.value;
+    await loadBrandModelList();
+    var sortedEntries = brandList..sort((a, b) => a.key.compareTo(b.key));
+    await displaySelectedBrand(sortedEntries.first.key);
+    loadingData.value = !loadingData.value;
   }
 
-  void addCategory() async {
+  void addBrand() async {
     try {
       // start loading
       TFullScreenLoader.openLoadingDialog(
-        'We are uploading category information...',
+        'We are uploading brand information...',
         TImages.docerAnimation,
       );
 
@@ -90,17 +91,23 @@ class BrandControllerAdmin extends GetxController {
       }
 
       // Update user's first and last name in firebase firestore
-      category.value.id = "";
-      category.value.name = categoryName.text;
-      category.value.isFeatured = isFeatured.value;
-      category.value.parentId = selectedParentId.value;
-      await uploadsRepository.uploadCategoryData(category.value);
-
+      brandModel.value.id = "";
+      brandModel.value.name = brandName.text;
+      brandModel.value.isFeatured = isFeatured.value;
+      brandModel.value.productsCount = 0;
+      String id = await uploadsRepository.uploadBrandData(brandModel.value);
+      for(String categoryId in selectedCategory) {
+        BrandCategoryModel brandCategory = BrandCategoryModel(
+          brandId: id,
+          categoryId: categoryId,
+        );
+        await uploadsRepository.uploadBrandCategoryData(brandCategory);
+      }
       TFullScreenLoader.stopLoading();
 
       TLoaders.successSnackBar(
         title: 'Congratulations',
-        message: 'Category details has been uploaded.',
+        message: 'Brand details has been uploaded.',
       );
 
       Get.offAll(() => const UploadScreen());
@@ -114,7 +121,7 @@ class BrandControllerAdmin extends GetxController {
     }
   }
 
-  Future<void> uploadCategoryImage() async {
+  Future<void> uploadBrandImage() async {
     try {
       final image = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -126,14 +133,14 @@ class BrandControllerAdmin extends GetxController {
       if (image != null) {
         imageUploading.value = true;
         imageUrl.value =
-        await uploadsRepository.uploadImage('categories/', image);
+        await uploadsRepository.uploadImage('brands/', image);
         // update user Image Record
-        category.value.image = imageUrl.value;
-        category.refresh();
+        brandModel.value.image = imageUrl.value;
+        brandModel.refresh();
       }
       TLoaders.successSnackBar(
         title: 'Congratulations',
-        message: 'Category image has been uploaded!.',
+        message: 'Brand logo has been uploaded!.',
       );
     } catch (e) {
       TLoaders.errorSnackBar(
@@ -147,49 +154,61 @@ class BrandControllerAdmin extends GetxController {
 
   Future<void> loadCategoryList() async {
     try {
+      categoryList.clear();
       final list = await uploadsRepository.fetchCategoryList();
       list.forEach((key, value) {
-        categoryMap[key] = value;
+        categoryList.add(MapEntry(key, value));
       });
+      categoryList;
+      categoryList.refresh();
     } catch(e) {
       TLoaders.errorSnackBar(title: 'Oh snap!', message: "Error in loading categories list.");
-      categoryMap.clear();
+      categoryList.clear();
     }
   }
 
-  // for updating the category
-  void fetchCategoryModelsListAndLoadCategory() async {
+  Future<void> loadBrandModelList() async {
     loadingData.value = !loadingData.value;
-    await loadCategoryList();
-    await loadParentCategoryList();
-    var sortedEntries = categoryMap.entries.toList()
-      ..sort((a, b) => a.key.compareTo(b.key));
-    await displayTheSelectedCategory(sortedEntries.first.key);
-    loadingData.value = !loadingData.value;
-  }
-
-  // for updating the category
-  Future<void> displayTheSelectedCategory(String key) async {
+    brandList.clear();
     try {
-      CategoryModel categoryModel = await uploadsRepository.getCategoryDetails(key);
-      categoryName.text = categoryModel.name;
-      isFeatured.value = categoryModel.isFeatured;
-      imageUrl.value = categoryModel.image;
-      selectedCategoryId.value = categoryModel.id;
-      selectedParentId.value = categoryModel.parentId;
-      category.value = categoryModel;
+      final list = await uploadsRepository.fetchBrandList();
+      list.forEach((key, value) {
+        brandList.add(MapEntry(key, value));
+      });
     } catch(e) {
-      TLoaders.errorSnackBar(title: 'Oh snap!', message: "Error in loading category detail.");
-      categoryMap.clear();
+      TLoaders.errorSnackBar(title: 'Oh snap!', message: "Error in loading brands list.");
+      categoryList.clear();
+    }
+    loadingData.value = !loadingData.value;
+  }
+
+  // for updating the brand
+  Future<void> displaySelectedBrand(String id) async {
+    try {
+      BrandModel brand = await uploadsRepository.getBrandDetails(id);
+      brandName.text = brand.name;
+      isFeatured.value = brand.isFeatured ?? false;
+      imageUrl.value = brand.image;
+      brandModel.value = brand;
+      selectedCategory.clear();
+      productCount.value = brand.productsCount ?? 0;
+      final list = await uploadsRepository.fetchBrandCategoryModelList(id);
+      for (var element in list) {
+        selectedCategory.add(element);
+      }
+      selectedCategory.refresh();
+    } catch(e) {
+      TLoaders.errorSnackBar(title: 'Oh snap!', message: "Error in loading brand detail.");
+      categoryList.clear();
     }
   }
 
   // for updating the category
-  void updateCategory() async {
+  void updateBrandModel() async {
     try {
       // start loading
       TFullScreenLoader.openLoadingDialog(
-        'We are updating category information...',
+        'We are updating brand information...',
         TImages.docerAnimation,
       );
 
@@ -210,13 +229,29 @@ class BrandControllerAdmin extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
-
-      // Update user's first and last name in firebase firestore
-      category.value.id = selectedCategoryId.value;
-      category.value.name = categoryName.text;
-      category.value.isFeatured = isFeatured.value;
-      category.value.parentId = selectedParentId.value;
-      await uploadsRepository.updateCategoryData(category.value);
+      // TODO: when you replace the image it should delete the previous image but it is not deleting the previous image.
+      // Update brand's details in firebase firestore
+      brandModel.value.id = selectedBrandId.value;
+      brandModel.value.name = brandName.text;
+      brandModel.value.isFeatured = isFeatured.value;
+      brandModel.value.productsCount = productCount.value;
+      brandModel.value.image = imageUrl.value;
+      // fetch the previous selected category list
+      Set<String> set = <String>{};
+      set.addAll(await uploadsRepository.fetchBrandCategoryModelList(selectedBrandId.value));
+      // set difference
+      final setKeysToBeRemoved = set.difference(selectedCategory);
+      final setKeysToBeAdded = selectedCategory.difference(set);
+      // removed the brandcategory which not selected.
+      for(String id in setKeysToBeRemoved) {
+        await uploadsRepository.deleteBrandCategoryModel(id);
+      }
+      // added the brandcategory which is selected.
+      for(String id in setKeysToBeAdded) {
+        await uploadsRepository.uploadBrandCategoryData(BrandCategoryModel(brandId: selectedBrandId.value, categoryId: id));
+      }
+      // update the brand details
+      await uploadsRepository.updateBrandData(brandModel.value);
 
       TFullScreenLoader.stopLoading();
 
@@ -236,11 +271,11 @@ class BrandControllerAdmin extends GetxController {
     }
   }
 
-  void deleteCategory() async {
+  void deleteBrand() async {
     try {
       // start loading
       TFullScreenLoader.openLoadingDialog(
-        'We are removing category information...',
+        'We are removing brand information...',
         TImages.docerAnimation,
       );
 
@@ -257,15 +292,22 @@ class BrandControllerAdmin extends GetxController {
         return;
       }
 
-      CategoryModel category = await uploadsRepository.getCategoryDetails(selectedParentId.value);
-      await uploadsRepository.deleteImage(category.image);
-      await uploadsRepository.deleteCategoryData(selectedParentId.value);
+      // fetched the imageUrl and deleted the image from the storage;
+      final brand = await uploadsRepository.getBrandDetails(selectedBrandId.value);
+      await uploadsRepository.deleteImage(brand.image);
+      // delete the BrandCategoryModel one by one.
+      final docList = await uploadsRepository.fetchBrandCategoryModelDocIdList(selectedBrandId.value);
+      for(String id in docList) {
+        await uploadsRepository.deleteBrandCategoryModel(id);
+      }
+      // delete the brand details
+      await uploadsRepository.deleteBrandModelData(selectedBrandId.value);
 
       TFullScreenLoader.stopLoading();
 
       TLoaders.successSnackBar(
         title: 'Congratulations',
-        message: 'Category details has been removed.',
+        message: 'Brand details has been removed.',
       );
 
       Get.offAll(() => const UploadScreen());
@@ -280,12 +322,12 @@ class BrandControllerAdmin extends GetxController {
   }
 
   // Delete account warning
-  void deleteCategoryWarningPopup() {
+  void deleteBrandWarningPopup() {
     Get.defaultDialog(
       contentPadding: const EdgeInsets.all(TSizes.md),
-      title: 'Delete Category',
+      title: 'Delete Brand',
       middleText:
-      'Are you sure you want to delete category permanently? This action is not reversible and all the data will be removed permanently.',
+      'Are you sure you want to delete brand permanently? This action is not reversible and all the data will be removed permanently.',
       actions: [
         OutlinedButton(
           onPressed: () => Navigator.of(Get.overlayContext!).pop(),
@@ -293,7 +335,7 @@ class BrandControllerAdmin extends GetxController {
         ),
         const Spacer(),
         ElevatedButton(
-          onPressed: () async => deleteCategory(),
+          onPressed: () async => deleteBrand(),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red,
             side: const BorderSide(color: Colors.red),

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/images/circular_image.dart';
-import '../../../../common/widgets/shimmer/shimmer_efftect.dart';
+import '../../../../common/widgets/shimmer/shimmer_effect.dart';
 
 class CategoryAdditionScreen extends StatelessWidget {
   const CategoryAdditionScreen({super.key});
@@ -45,7 +45,7 @@ class CategoryAdditionScreen extends StatelessWidget {
                             : TImages.defaultCategoryIcon;
 
                         return controller.imageUploading.value
-                            ? const TShimmerEfftect(
+                            ? const TShimmerEffect(
                                 width: 80,
                                 height: 80,
                                 radius: 80,

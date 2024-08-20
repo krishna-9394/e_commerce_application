@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../common/widgets/images/circular_image.dart';
-import '../../../../common/widgets/shimmer/shimmer_efftect.dart';
+import '../../../../common/widgets/shimmer/shimmer_effect.dart';
 
 class CategoryDeleteScreen extends StatelessWidget {
   const CategoryDeleteScreen({super.key});
