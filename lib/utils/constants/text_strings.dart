@@ -32,8 +32,14 @@ class TTexts {
   static const String phoneNo = "Phone Number";
   static const String rememberMe = "Remember Me";
   static const String isFeatured = "Is Featured";
+  static const String productType = "Product Type";
   static const String categoryName = "Category Name";
   static const String brandName = "Brand Name";
+  static const String productTitle = "Product Title";
+  static const String productAttributeName = "Attribute Name";
+  static const String productAttributeValueCount = "Attributes Count";
+  static const String productDescription = "Description";
+  static const String productName = "Product Name";
   static const String forgetPassword = "Forget Password?";
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";

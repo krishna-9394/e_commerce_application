@@ -5,6 +5,9 @@ import 'package:e_commerce_application/features/admin/screens/brand/delete_brand
 import 'package:e_commerce_application/features/admin/screens/brand/update_brand.dart';
 import 'package:e_commerce_application/features/admin/screens/category/delete_category.dart';
 import 'package:e_commerce_application/features/admin/screens/category/update_category.dart';
+import 'package:e_commerce_application/features/admin/screens/product/add_product.dart';
+import 'package:e_commerce_application/features/admin/screens/product/delete_product.dart';
+import 'package:e_commerce_application/features/admin/screens/product/update_product.dart';
 import 'package:e_commerce_application/features/shop/controllers/product/product_controller.dart';
 import 'package:e_commerce_application/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -127,15 +130,21 @@ class UploadScreen extends StatelessWidget {
 
                   TSettingMenuTile(
                     title: 'Add',
-                    subTitle: 'Add a Product to Catalogue',
+                    subTitle: 'Add a product to Catalogue',
                     icon: Iconsax.discount_shape,
-                    onTap: () {},
+                    onTap: () => Get.to(() => const ProductAdditionScreen()),
+                  ),
+                  TSettingMenuTile(
+                    title: 'Update',
+                    subTitle: 'Update details of product in Catalogue',
+                    icon: Iconsax.discount_shape,
+                    onTap: () => Get.to(() => const ProductUpdateScreen()),
                   ),
                   TSettingMenuTile(
                     title: 'Remove',
                     subTitle: 'Remove a Product from Catalogue',
                     icon: Iconsax.notification,
-                    onTap: () {},
+                    onTap: () => Get.to(() => const ProductDeleteScreen()),
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections * 2.5),
                 ],

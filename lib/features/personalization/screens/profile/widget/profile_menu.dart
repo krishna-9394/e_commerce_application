@@ -5,12 +5,14 @@ import 'package:iconsax/iconsax.dart';
 class TProfileMenu extends StatelessWidget {
   final String question, answer;
   final IconData? icon;
+  final bool isActionButtonRequired;
   final VoidCallback? onPressed;
   const TProfileMenu({
     super.key,
     required this.question,
     required this.answer,
     this.icon = Iconsax.arrow_right_34,
+    this.isActionButtonRequired = true,
     this.onPressed,
   });
 
@@ -38,7 +40,7 @@ class TProfileMenu extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Expanded(child: Icon(icon))
+             if(isActionButtonRequired) Expanded(child: Icon(icon))
           ],
         ),
       ),

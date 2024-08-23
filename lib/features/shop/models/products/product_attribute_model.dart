@@ -1,6 +1,6 @@
 class ProductAttributeModel {
   String? name;
-  final List<String>? values;
+  List<String>? values;
 
   ProductAttributeModel({this.name, this.values});
 
@@ -12,6 +12,10 @@ class ProductAttributeModel {
     };
   }
 
+  factory ProductAttributeModel.empty() {
+    return ProductAttributeModel(name: '', values: []);
+  }
+
   // convert the Json Oriented document snapshot from Firebase to ProductAttributeModel
   factory ProductAttributeModel.fromJson(Map<String, dynamic> document) {
     final data = document;
@@ -20,5 +24,14 @@ class ProductAttributeModel {
       name: data.containsKey('Name') ? data['Name'] : '',
       values: List<String>.from(data['values']),
     );
+  }
+
+  String getValues() {
+
+    return values!.join(', ');
+  }
+
+  String getName() {
+    return name ?? "";
   }
 }
