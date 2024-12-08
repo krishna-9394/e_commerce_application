@@ -1,3 +1,8 @@
+# Flutter E-Commerce App Template
+
+The FlutterShop template makes it easier to develop an e-commerce app using Flutter. It includes all the necessary pages to build a shopping app for both Android and iOS using flutter. This shop app template comes with 100+ screens. Some of these pages are Splash, Login, Signup, Home, Product, Search, Cart, Profile, Payment, Wallet, Order Tracking, and Order History. Additionally, all pages support both light and dark themes.You just need to connect the UI to your preferred backend, such as Firebase, WordPress, or your custom API. You can do anything you want with it.
+
+
 ## Screenshots
 
 <div style="display: flex; flex-wrap: wrap; gap: 20; justify-content: center;">
