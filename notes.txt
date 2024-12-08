@@ -1,0 +1,7 @@
+Deploy Flutter Project
+Deploying flutter app on various platform
+
+Playstore
+keytool -genkey -v -keystore D:\e_commerce_application\android\app\upload-keystore.jks ^ -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 ^ -alias upload
+command to generate sha key: keytool -list -v -keystore "C:Users\krish.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+SHA1: 3B:3E:10:CF:46:A9:58:C3:CC:6B:31:01:70:74:70:10:49:EF:A4:5D SHA256: 64:82:6A:CB:94:E8:99:95:C3:42:3C:AB:0D:5D:97:A8:92:CC:A2:58:29:2C:65:7F:D3:8B:84:5A:67:D4:12:5F
